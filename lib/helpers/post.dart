@@ -1,7 +1,7 @@
 class Post{
   String _razaosocial;
   String _distancia;
-  int _quantidade_dispositivos;
+  String _quantidade_dispositivos;
   String _site;
   String _data_criacao;
   String _estacionamento;
@@ -165,9 +165,9 @@ class Post{
     _site = value;
   }
 
-  int get quantidade_dispositivos => _quantidade_dispositivos;
+  String get quantidade_dispositivos => _quantidade_dispositivos;
 
-  set quantidade_dispositivos(int value) {
+  set quantidade_dispositivos(String value) {
     _quantidade_dispositivos = value;
   }
 
