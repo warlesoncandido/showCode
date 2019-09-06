@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:cardapio_show/helpers/post.dart';
+import 'package:cardapio_show/pages/sobre.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
 
+List<Post> postagens = List();
 
 class Cardapio extends StatefulWidget {
   @override
@@ -13,30 +15,37 @@ class Cardapio extends StatefulWidget {
 
 class _CardapioState extends State<Cardapio> {
 
-  String _url = "http://service.addmob.com.br/appchef/data/import/?tipo=nrestaurante_chef&latitude=0&longetudide=0";
-  List<Post> postagens = List();
+  String _url = "http://service.addmob.com.br/appchef/data/import/?tipo=nrestaurante_chef2&latitude=0&longetudide=0";
+  
+
   Future<List<Post>> _recuperandoRestaurante() async {
 
     http.Response response = await http.get(_url);
 
     Map dados = json.decode(response.body);
-
+    postagens.clear();
 
     for(var post in dados['restaurante']){
+        
+      // Uint8List base64 = base64Url.decode(post['logoempresa'].toString().replaceAll("data:image/jpeg;base64,", ""));
       Post p = Post(post['razaosocial'], post['distancia'], post['quantidade_dispositivos'],
           post['site'], post['data_criacao'], post['estacionamento'],
           post['complemento'], post['data_ultima_atualizacao'], post['manobrista'],
           post['playground'], post['telefone'], post['latitude'],
           post['email'], post['descricao'], post['cnpj'],
-          post['bairro'], post['numeroendereco'], post['logoempresa'],
+          post['bairro'], post['numeroendereco'],post['url2'] ,
           post['nome_empresa'], post['estado'], post['codregistro'],
           post['cidade'], post['imagem_menu'], post['longitude'], post['endereco']);
-      postagens.add(p);
-    }
-    return postagens;
-    print(postagens.toString());
 
+      postagens.add(p);
+      
+    }
+    
+    return postagens;
+    
   }
+
+  
 
 
   @override
@@ -90,7 +99,41 @@ class _CardapioState extends State<Cardapio> {
                                   return ListView.builder(
                                       itemCount: snapshot.data.length,
                                       itemBuilder: (context,index){
-                                        return CardRestaurante();
+                                        return GestureDetector(
+                                          onTap: (){
+                                             Navigator.push(context, MaterialPageRoute(builder: (context)=>Sobre(snapshot.data[index])));
+                                          },
+                                          child: Card(
+                                            child: Row(
+                                              children: <Widget>[
+                                                Container(
+                                                  width:100,
+                                                  height: 100,
+                                                  padding: EdgeInsets.all(10),
+                                                  child: Image.network(snapshot.data[index].logoempresa),
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Flexible(
+                                                      flex:0,
+                                                        child: Text("${snapshot.data[index].nomeempresa}",
+                                                          style: TextStyle(
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 20
+                                                          ),
+                                                        ),
+                                                    ),
+                                                    Text("${snapshot.data[index].telefone}"),
+                                                    Text("${snapshot.data[index].site}"),
+                                                    Text("${snapshot.data[index].endereco} "+"${snapshot.data[index].numeroendereco}"),
+                                                    Text("${snapshot.data[index].bairro}  / "+"${snapshot.data[index].cidade}")
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        );
                                       });
 
 
@@ -108,36 +151,5 @@ class _CardapioState extends State<Cardapio> {
   }
 }
 
-class CardRestaurante extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Row(
-        children: <Widget>[
-          Container(
-            width:100,
-            height: 100,
-            padding: EdgeInsets.all(10),
-            child: Image.asset('images/chef.png'),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text("Nome Restaurante",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20
-                ),
-              ),
-              Text("(31)90000-0000"),
-              Text("@restaurante"),
-              Text("Rua dos Ipês,100 - Santa Efigênia")
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
 
 

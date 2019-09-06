@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import 'cardapio.dart';
-
+var maskFormatter = new MaskTextInputFormatter(mask: '(##)#####-####', filter: { "#": RegExp(r'[0-9]') });
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
+    
     return Scaffold(
       backgroundColor: Color.fromRGBO(245, 245, 245,1),
       body: SingleChildScrollView(
@@ -35,15 +42,16 @@ class Login extends StatelessWidget {
                     style: TextStyle(fontSize: 18),),
                 ),
                 Container(
-                    height: 50,
+                    height: 40,
                     width: 300,
-                    padding: EdgeInsets.only(bottom: 10,),
+                    margin: EdgeInsets.only(bottom: 10,),
                     child: TextField(
                       style: TextStyle(
                         fontSize: 15.0,
-                        color: Colors.blueAccent,
+                        
                       ),
                       decoration: InputDecoration(
+                        fillColor: Colors.black,
                           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                           prefixIcon: Icon(Icons.person_pin,color: Colors.black,),
                           hintText: "Nome",
@@ -60,21 +68,25 @@ class Login extends StatelessWidget {
 
                 ),
                 Container(
-                  height: 50,
+                  height: 60,
                   width: 300,
-                  padding: EdgeInsets.only(bottom: 10),
-                  margin: EdgeInsets.only(bottom: 50),
+                  
+                   margin: EdgeInsets.only(bottom: 50),
                   child: TextField(
-
+                    keyboardType: TextInputType.number,
+                    maxLength: 14,
+                    inputFormatters: [maskFormatter],
                     style: TextStyle(
                       fontSize: 15.0,
                     ),
                     decoration:
                     InputDecoration(
+                        
                         fillColor: Colors.black,
                         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                         prefixIcon: Icon(Icons.phone,color: Colors.black,),
                         hintText: "(31)90000-0000",
+                        
                         border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.blueAccent, width: 32.0),
                             borderRadius: BorderRadius.circular(25.0)),

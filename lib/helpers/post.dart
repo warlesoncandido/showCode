@@ -1,3 +1,5 @@
+
+
 class Post{
   String _razaosocial;
   String _distancia;
@@ -10,7 +12,7 @@ class Post{
   String _manobrista;
   String _playground;
   String _telefone;
-  String _latidude;
+  String _latitude;
   String _email;
   String _descricao;
   String _cnpj;
@@ -28,7 +30,7 @@ class Post{
   Post(this._razaosocial, this._distancia, this._quantidade_dispositivos,
       this._site, this._data_criacao, this._estacionamento, this._complemento,
       this._data_ultima_atualizacao, this._manobrista, this._playground,
-      this._telefone, this._latidude, this._email, this._descricao, this._cnpj,
+      this._telefone, this._latitude, this._email, this._descricao, this._cnpj,
       this._bairro, this._numeroendereco, this._logoempresa, this._nomeempresa,
       this._estado, this._codregistro, this._cidade, this._imagem_menu,
       this._longitude, this._endereco);
@@ -111,10 +113,10 @@ class Post{
     _email = value;
   }
 
-  String get latidude => _latidude;
+  String get latidude => _latitude;
 
-  set latidude(String value) {
-    _latidude = value;
+  set latitude(String value) {
+    _latitude = value;
   }
 
   String get telefone => _telefone;
@@ -183,5 +185,70 @@ class Post{
     _razaosocial = value;
   }
 
+//  Metodos
 
-}
+  Post.fromJson(Map json)
+      : _razaosocial = json['razaosocial'],
+        _distancia = json['distancia'],
+        _quantidade_dispositivos = json['quantidade_dispositivos'],
+        _site = json['site'],
+        _data_criacao = json['data_criacao'],
+        _estacionamento = json['estacionamento'],
+        _complemento = json['complemento'],
+        _data_ultima_atualizacao = json['data_ultima_atualizacao'],
+        _manobrista = json['manobrista'],
+        _playground = json['playground'],
+        _telefone = json['telefone'],
+        _latitude = json['latitude'],
+        _email = json['email'],
+        _descricao = json['descricao'],
+        _cnpj = json['cnpj'],
+        _bairro = json['bairro'],
+        _numeroendereco = json['numeroendereco'],
+        _logoempresa = json['logoempresa'],
+        _nomeempresa = json['nome_empresa'],
+        _estado = json['estado'],
+        _codregistro = json['codregistro'],
+        _cidade = json['cidade'],
+        _imagem_menu = json['imagem_menu'],
+        _longitude = json['longitude'],
+        _endereco = json['endereco'];
+
+
+  Map toJson() {
+    return {'razaosocial' : _razaosocial,
+      'distancia' : _distancia,
+      'quantidade_dispositivos' : _quantidade_dispositivos,
+      'site' : _site,
+      'data_criacao':_data_criacao,
+      'estacionamento':_estacionamento,
+      'complemento': _complemento,
+      'data_ultima_atualizacao' : _data_ultima_atualizacao,
+      'manobrista':_manobrista ,
+      'playground': _playground,
+      'telefone': _telefone ,
+      'latitude': _latitude,
+      'email':_email ,
+      'descricao':_descricao ,
+      'cnpj':_cnpj ,
+      'bairro': _bairro,
+      'numeroendereco':_numeroendereco ,
+      'logoempresa': _logoempresa,
+      'nomeempresa':_nomeempresa ,
+      'estado': _estado,
+      'codregistro':_codregistro ,
+      'cidade':_cidade ,
+      'imagem_menu':_imagem_menu ,
+      'longitude':_longitude ,
+      'endereco':_endereco
+    };
+
+
+
+
+
+
+
+    }
+  }
+

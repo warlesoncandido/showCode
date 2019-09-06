@@ -24,6 +24,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   http: ^0.12.0+2
+  page_indicator: ^0.3.0
+  mask_text_input_formatter: ^1.0.2
+  url_launcher: ^5.1.2
+  flutter_launcher_icons: ^0.7.3
+  dots_indicator: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +55,13 @@ flutter:
     - images/icon-cardapio-show-transparente.png
     - images/prato.png
     - images/chef.png
+    - images/salada.png
+    - images/curtir.png
+    - icons/phone.png
+    - icons/inst.png
+    - icons/fb.png
+    - icons/web.png
+    - icons/time.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -76,3 +88,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "icons/icon.png"
