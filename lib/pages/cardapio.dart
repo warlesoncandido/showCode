@@ -67,13 +67,15 @@ class _CardapioState extends State<Cardapio> {
                               onPressed: (){
                                 Navigator.pop(context);
                               }),
+                              
                           Container(
                             height: 50,
                             width: 50,
-                            margin: EdgeInsets.only(right: 2,left: 40),
+                            // ,
                             child: Image.asset('images/icon-cardapio-show-transparente.png'),
                           ),
                           Expanded(
+                            flex: 1,
                             child: Text("CARDÁPIO SHOW",
                               style:TextStyle(
                                   color: Color.fromRGBO(252, 76, 2, 1)

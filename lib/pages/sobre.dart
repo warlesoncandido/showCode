@@ -23,34 +23,38 @@ class _SobreState extends State<Sobre> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-      Container(
-        padding: EdgeInsets.only(bottom: 30),
-        child: Row(
-
-          children: <Widget>[
-            IconButton(
-                icon: Icon(Icons.navigate_before),
-                onPressed: (){
-                  Navigator.pop(context);
-                }),
-            Container(
-              height: 50,
-              width: 50,
-              margin: EdgeInsets.only(right: 2,left: 40),
-              child: Image.asset('images/icon-cardapio-show-transparente.png'),
-            ),
-            Expanded(
-              child: Text("CARDÁPIO SHOW",
-                style:TextStyle(
-                    color: Color.fromRGBO(252, 76, 2, 1)
-                    ,fontSize: 22,
-                    fontWeight: FontWeight.bold) ,),
-            )
-          ],
-        ),
-      ),
+        Expanded(
+                      flex: 0,
+                      child: Row(
+                        children: <Widget>[
+                          IconButton(
+                              icon: Icon(Icons.navigate_before),
+                              onPressed: (){
+                                Navigator.pop(context);
+                              }),
+                              
+                          Container(
+                            height: 50,
+                            width: 50,
+                            // ,
+                            child: Image.asset('images/icon-cardapio-show-transparente.png'),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Text("CARDÁPIO SHOW",
+                              style:TextStyle(
+                                  color: Color.fromRGBO(252, 76, 2, 1)
+                                  ,fontSize: 22,
+                                  fontWeight: FontWeight.bold) ,),
+                          )
+                        ],
+                      ),
+                    ),
       
-        Container(
+      
+       Expanded(
+         flex: 1,
+         child:  Container(
           padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
             color: Colors.white,
           width: 1000,
@@ -62,7 +66,7 @@ class _SobreState extends State<Sobre> {
             children: <Widget>[
 
 //  INICIO SOBRE RESTAURANTE
-              Container(
+               Container(
                 
                 padding: EdgeInsets.fromLTRB(15, 15, 15, 30),
                 color: Colors.white,
@@ -238,6 +242,7 @@ class _SobreState extends State<Sobre> {
             ),
                 )
               ),
+              
 
 // INICIO DO SOBRE O PRATO
 
@@ -353,6 +358,7 @@ class _SobreState extends State<Sobre> {
           
           
       ),
+       ),
       
       ]
       )

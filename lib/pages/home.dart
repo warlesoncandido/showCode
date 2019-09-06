@@ -120,10 +120,12 @@ class Login extends StatelessWidget {
                     ),
                   ),
                 ),
-              Container(
+              
+                Container(
                 width: 300,
                 child: Image.asset('images/prato.png'),
               )
+              
               ],
               
             ),
