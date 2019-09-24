@@ -1,4 +1,4 @@
-package com.example.cardapio_show;
+package com.esoft.cardapio_show;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

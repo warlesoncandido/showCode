@@ -1,15 +1,11 @@
-import 'package:cardapio_show/helpers/pratos.dart';
 import 'package:flutter/material.dart';
 
- 
-
-class Sobre extends StatefulWidget  {
-   Pratos data;
-   Sobre(this.data);
+class Promocao extends StatefulWidget {
   @override
-  _SobreState createState() => _SobreState();
+  _PromocaoState createState() => _PromocaoState();
 }
-class _SobreState extends State<Sobre> {
+
+class _PromocaoState extends State<Promocao> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,28 +41,9 @@ class _SobreState extends State<Sobre> {
                         ],
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child:Column(
-                        children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image:NetworkImage(widget.data.imagemPrato) )
-                            ),
-                          )
-                        ],
-                      ) ,
-                    )
+                    
                ] )
     )
     );
   }
-  } 
-  
-
-
-
-
-
-  
+}

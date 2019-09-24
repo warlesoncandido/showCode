@@ -27,8 +27,11 @@ dependencies:
   page_indicator: ^0.3.0
   mask_text_input_formatter: ^1.0.2
   url_launcher: ^5.1.2
-  flutter_launcher_icons: ^0.7.3
-  dots_indicator: ^1.0.0
+  connectivity: ^0.4.4
+  shifting_tabbar: ^0.3.1
+  
+  
+  
 
 dev_dependencies:
   flutter_test:
@@ -54,14 +57,20 @@ flutter:
   assets:
     - images/icon-cardapio-show-transparente.png
     - images/prato.png
-    - images/chef.png
-    - images/salada.png
+    - images/sem-conexao.png
     - images/curtir.png
+    - images/restaurante.jpg
     - icons/phone.png
     - icons/inst.png
     - icons/fb.png
     - icons/web.png
     - icons/time.png
+    - icons/cardapio.png 
+    - icons/sugestoes.png
+    - icons/promocoes.png
+    - icons/fechar.png
+    - icons/reservas.png
+    - icons/facebook.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

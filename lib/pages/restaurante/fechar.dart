@@ -1,18 +1,14 @@
-import 'package:cardapio_show/helpers/pratos.dart';
 import 'package:flutter/material.dart';
 
- 
-
-class Sobre extends StatefulWidget  {
-   Pratos data;
-   Sobre(this.data);
+class Fechar extends StatefulWidget {
   @override
-  _SobreState createState() => _SobreState();
+  _FecharState createState() => _FecharState();
 }
-class _SobreState extends State<Sobre> {
+
+class _FecharState extends State<Fechar> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       backgroundColor: Color.fromRGBO(245, 245, 245,1), 
       body: Padding(
           padding: EdgeInsets.fromLTRB(10, 25, 10, 2),
@@ -45,28 +41,9 @@ class _SobreState extends State<Sobre> {
                         ],
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child:Column(
-                        children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image:NetworkImage(widget.data.imagemPrato) )
-                            ),
-                          )
-                        ],
-                      ) ,
-                    )
+                    
                ] )
     )
     );
   }
-  } 
-  
-
-
-
-
-
-  
+}
