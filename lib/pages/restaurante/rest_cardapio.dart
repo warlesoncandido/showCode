@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+
 import 'package:cardapio_show/helpers/post.dart';
 import 'package:cardapio_show/pages/restaurante/pages.dart';
 import 'package:http/http.dart' as http;
@@ -80,7 +80,7 @@ class _Res_CardapioState extends State<Res_Cardapio> {
                                       itemCount: snapshot.data.length,
                                       itemBuilder: (context,index){
                                         return  
-                                              Pages(snapshot.data[index].nomeGrupo,widget.data.codregistro,snapshot.data[index].idGrupo);
+                                              Pages(snapshot.data[index].nomeGrupo,widget.data,snapshot.data[index].idGrupo);
                                               
                                             
                                         
@@ -132,7 +132,7 @@ class _Res_CardapioState extends State<Res_Cardapio> {
     }
       
     }catch(e){
-       if(e is SocketException) e.message;
+       
     }
     return grupos;
   }

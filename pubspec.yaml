@@ -29,6 +29,8 @@ dependencies:
   url_launcher: ^5.1.2
   connectivity: ^0.4.4
   shifting_tabbar: ^0.3.1
+  shared_preferences: ^0.5.3+4
+  toast: ^0.1.5
   
   
   

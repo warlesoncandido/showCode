@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:cardapio_show/helpers/post.dart';
 import 'package:cardapio_show/pages/restaurante/sobre_restaurante.dart' as prefix1;
 import 'package:http/http.dart' as http;
 import 'package:cardapio_show/helpers/pratos.dart';
@@ -9,9 +10,9 @@ import 'package:flutter/material.dart';
  class Pages extends StatefulWidget {
 
    String id;
-   String cod;
+   Post res;
    String nome;
-    Pages(this.nome,this.cod,this.id);
+    Pages(this.nome,this.res,this.id);
 
   @override
   _PagesState createState() => _PagesState();
@@ -33,7 +34,7 @@ class _PagesState extends State<Pages> {
             Expanded(
               
               child: FutureBuilder<List<Pratos>>(
-                  future: _recuperarPratos(widget.cod,widget.id),
+                  future: _recuperarPratos(widget.res.codregistro,widget.id),
                   builder: (context,snapshot){
                      switch(snapshot.connectionState){
                                 case ConnectionState.none:
@@ -58,16 +59,16 @@ class _PagesState extends State<Pages> {
                                           return  Container(
                                             //  INICIO DO CARD PRODUTOS
                                               child: Card(
-                                                
                                                 elevation: 5,
                                                 borderOnForeground: true,
-                                                child: Padding(
+                                                child: Container(
+                                                  height: 200,
                                                   padding: EdgeInsets.all(5),
                                                   child: Column(
                                                     children: <Widget>[
                                                      GestureDetector(
                                                 onTap: (){
-                                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>prefix1.Sobre_Restaurante(snapshot.data[index])));
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>prefix1.Sobre_Restaurante(snapshot.data[index],widget.res)));
                                                 },
                                                 child:
                                                       Row(
@@ -79,7 +80,7 @@ class _PagesState extends State<Pages> {
                                                         Text(snapshot.data[index].nomePrato.toUpperCase(),
                                                         style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
                                                         Container(
-                                                          height: 70,
+                                                          height: 50,
                                                           margin: EdgeInsets.only(top:10  , bottom: 10),
                                                           constraints: BoxConstraints(maxWidth: 500),
                                                           child: Text(
@@ -94,15 +95,12 @@ class _PagesState extends State<Pages> {
                                                         style:
                                                          TextStyle(color:Color.fromRGBO(252, 76, 2, 1),fontSize: 20 ),
                                                          ),
-                                                        
-                                                      
-                                                        
                                                       ]),
                                                      ),
                                                    
                                                    Container(
                                                      margin: EdgeInsets.only(left: 3),
-                                                     height: 100,
+                                                     height: 190,
                                                      width: 120,
                                                      decoration: BoxDecoration(
                                                        borderRadius: BorderRadius.circular(10),
@@ -149,9 +147,8 @@ Future<List<Pratos>> _recuperarPratos(cod,id) async {
       prato.clear();
       for(var p in dados['response']){ 
         Pratos pratos = Pratos(preco:p['preco'],relacaoPrato: p['relacao_prato'],nomePrato: p['nome_prato'],descricaoPrato: p['descricao_prato'],imagemPrato: p['url'],id_produto: p['id_produto'],id_grupo: p['id_grupo'] );
-        prato.add(pratos);
-        
-    }
+        prato.add(pratos);    
+      }
     }catch(e){
        if(e is SocketException) e.message;
     }

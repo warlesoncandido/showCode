@@ -4,7 +4,6 @@ import 'package:cardapio_show/helpers/post.dart';
 import 'package:cardapio_show/pages/restaurante/menu_restaurante.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import 'dart:async';
 
 List<Post> postagens = List();
@@ -123,6 +122,7 @@ class _CardapioState extends State<Cardapio> {
                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Menu(snapshot.data[index])));
                                           },
                                           child: Card(
+                                            elevation: 5,
                                             child: Row(
                                               children: <Widget>[
                                                 Container(
@@ -154,8 +154,7 @@ class _CardapioState extends State<Cardapio> {
                                           ),
                                         );
                                       });
-                                        }
-                                  
+                                    }
                               }
                             }
                         )

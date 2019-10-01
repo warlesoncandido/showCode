@@ -1,35 +1,41 @@
-import 'package:cardapio_show/avisos/confirm.dart';
-import 'package:cardapio_show/avisos/confirm.dart' as prefix0;
+import 'package:toast/toast.dart';
+import 'package:cardapio_show/helpers/pedidos.dart';
+import 'package:cardapio_show/helpers/post.dart';
 import 'package:cardapio_show/helpers/pratos.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+TextEditingController mesaController = TextEditingController();
 Pratos prato = Pratos();
-
+Pedidos pedidos = Pedidos();
 int unidade = 1;
 double preco;
 
-GlobalKey key = GlobalKey();
 
-TextEditingController controller;
 class Sobre_Restaurante extends StatefulWidget {
+  
    Pratos data;
-   Sobre_Restaurante(this.data);
+   Post rest;
+   Sobre_Restaurante(this.data, this.rest);
   @override
   _SobreState createState() => _SobreState();
 }
 class _SobreState extends State<Sobre_Restaurante> {
  
  @override
-  void initState() {
+  void initState(){
     
     super.initState();
     unidade = 1;
     preco = double.parse(widget.data.preco);
+    
+    
   }
  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: chave,
       backgroundColor: Color.fromRGBO(245, 245, 245,1), 
       body: Padding(
           padding: EdgeInsets.fromLTRB(10, 25, 10, 2),
@@ -94,7 +100,7 @@ class _SobreState extends State<Sobre_Restaurante> {
                                                               child: Row(
                                                                 children: <Widget>[
                                                                   IconButton(
-                                                                    icon: Icon(Icons.remove,color: Colors.red,key: key,),
+                                                                    icon: Icon(Icons.remove,color: Colors.red,),
                                                                     onPressed:(){
                                                                       setState(() {
                                                                         if(unidade == 1){
@@ -129,19 +135,88 @@ class _SobreState extends State<Sobre_Restaurante> {
                                                            color: Colors.red,
                                                            textColor: Colors.white,
                                                            child: Text("Adicionar"),
-                                                           onPressed: (){
+                                                           onPressed: ()async{
+                                                             SharedPreferences prefs = await SharedPreferences.getInstance();
+                                                                if(prefs.getString("idrestaurante") == "" || prefs.getString("idrestaurante") == null){
+                                                                prefs.setString("idrestaurante", widget.rest.codregistro);
+                                                              }
+                                                              else if (prefs.getString("idrestaurante") != widget.rest.codregistro){
+                                                                showDialog(
+                                                                context: context,
+                                                                builder: (context) {
+                                                                  return AlertDialog(
+                                                                    title: Text('Atenção!!',style: TextStyle(color: Colors.red),textAlign: TextAlign.center,),
+                                                                    content: Text('Você tem uma conta aberta em outro restaurante.'),
+                                                                    actions: <Widget>[
+                                                                                                                                        
+                                                                    FlatButton(
+                                                                      onPressed: () {
+                                                                      Navigator.pop(context);
+                                                                      },
+                                                                      child: Text('Entendi!'),
+                                                                    )
+                                                                    ],
+                                                                    );
+                                                                });  
+                                                              }else{
+                                                                showDialog(
+                                                                context: context,
+                                                                builder: (context) {
+                                                                  return AlertDialog(
+                                                                    title: TextField(
+                                                                      textAlign: TextAlign.center,
+                                                                      keyboardType: TextInputType.number,
+                                                                      controller: mesaController,
+                                                                      onChanged: (text){
+                                                                        text = prefs.getString("mesa");
+                                                                      },
+                                                                      readOnly: prefs.getString("mesa") == null || prefs.getString("mesa") == "" ? false : true,
+                                                                      decoration: InputDecoration(
+                                                                        labelText: prefs.getString("mesa") == null || prefs.getString("mesa") == "" ? "Confirme sua mesa" : "Sua mesa:",
+                                                                        labelStyle: TextStyle(color: Colors.blue,
+                                                                        
+                                                                        fontSize: 20),
+                                                                        border: OutlineInputBorder(
+                                                                          borderSide: BorderSide(color: Colors.blueAccent, width: 32.0),
+                                                                          ),
+                                                                      ),
+                                                                      
+                                                                    ),
+                                                                    content: 
+                                                                        Text('PEDIR $unidade  ${widget.data.nomePrato}'),
+                                                                      
+                                                                    actions: <Widget>[
+                                                                      FlatButton(
+                                                                      onPressed:()async{
+                                                                       await adiconarPedido(widget.data, widget.rest, context,);
 
-                                                             Avisos aviso = Avisos(
-                                                               mensagem: unidade == 0 ? "Fazer pedido ${widget.data.nomePrato}?":"Fazer pedido de $unidade ${widget.data.nomePrato}"
-                                                              );
-                                                                aviso.confirmMesa(context);
-                                                            
-                                                           },
-                                                         ), 
-                                                              )
-                                                            )
-                                                          ],
-                                                          ),
+                                                                       Navigator.pop(context);                                                                        
+                                                                       
+                                                                        setState(() {
+                                                                         unidade = 1; 
+                                                                         preco = double.parse(widget.data.preco);
+                                                                        });
+                                                                        
+                                                                      },
+                                                                      child: Text('SIM!',style: TextStyle(color: Colors.green),),
+                                                                      ),
+                                                                      FlatButton(
+                                                                        onPressed: () {
+                                                                          Navigator.pop(context);
+                                                                        },
+                                                                        child: Text('NÃO!',style: TextStyle(color: Colors.red)),
+                                                                      ),
+                                                                      ],
+                                                                    );
+                                                                  });                                                                                     
+                                                              }
+                                                                
+                                                              }    
+                                                          ), 
+                                                        )
+                                                      )
+                                                    ],
+                                                  ),
                                       Container(
                                         margin: EdgeInsets.only(top: 20),
                                         child: Text("R\$ ${format(preco).replaceAll(".", ",")}",
@@ -159,8 +234,37 @@ class _SobreState extends State<Sobre_Restaurante> {
       );
     }
   }
-
-  String format(double n) {
+String format(double n) {
     
   return n.toStringAsFixed(2);
 }
+
+
+
+adiconarPedido(Pratos prato,Post restaurante,context)async{
+  try{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+     print(prato.id_produto);
+     pedidos.codPedidoVendasc = prefs.getString("cod") == "" || prefs.getString("cod") == null ? "" : prefs.getString("cod");
+     pedidos.idMesa = mesaController.text;
+     pedidos.idVendedor = "01";
+     pedidos.quantidadeProduto = unidade.toString();
+     pedidos.idProduto = prato.id_produto.toString();
+     pedidos.precoProduto = prato.preco.replaceAll(".", ",");
+     pedidos.quantidadeOpcional = "0";
+     pedidos.idOpcional = "0";
+     pedidos.precoOpcional = "0";
+     pedidos.idCelular = "25";
+     pedidos.idCliente = "15";
+                                                
+     pedidos.fazendoPedido(restaurante.codregistro,context);
+     prefs.setString("mesa", mesaController.text);
+     pedidos.setItem();
+  }catch (e){  
+  }    
+}
+        
+                                                                                                            
+
+
+

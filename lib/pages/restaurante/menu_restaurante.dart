@@ -1,7 +1,7 @@
 import 'package:cardapio_show/helpers/post.dart';
 import 'package:cardapio_show/pages/restaurante/reservas.dart';
 import 'package:cardapio_show/pages/restaurante/rest_cardapio.dart';
-import 'package:cardapio_show/pages/restaurante/sugestao.dart';
+import 'sugestao.promocao.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -11,6 +11,8 @@ class Menu extends StatefulWidget {
 
     Post data;
     Menu(this.data);
+    
+  String opcao;
   @override
   _MenuState createState() => _MenuState();
 }
@@ -99,7 +101,8 @@ class _MenuState extends State<Menu> {
                                   
                                   child: GestureDetector(
                                     onTap: (){
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=> Sugestao(widget.data)));
+                                        widget.opcao = "sugestao";
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=> Sugestao(widget.data,widget.opcao)));
 
                                     },
                                       child: Column(
@@ -122,7 +125,8 @@ class _MenuState extends State<Menu> {
                                   
                                   child: GestureDetector(
                                     onTap: (){
-                                       Navigator.push(context, MaterialPageRoute(builder: (context)=> Sugestao(widget.data)));
+                                      widget.opcao = "promocao";
+                                       Navigator.push(context, MaterialPageRoute(builder: (context)=> Sugestao(widget.data,widget.opcao)));
                                     },
                                       child: Column(
                                         children: <Widget>[
@@ -148,8 +152,10 @@ class _MenuState extends State<Menu> {
                                   Expanded(
                                  
                                   child: GestureDetector(
-                                    onTap: (){
-                                             Navigator.push(context, MaterialPageRoute(builder: (context)=> Fechar()));
+                                    onTap: ()async{
+                                   
+                                    
+                                             Navigator.push(context, MaterialPageRoute(builder: (context)=> Fechar(widget.data)));
 
                                     },
                                       child: Column(
