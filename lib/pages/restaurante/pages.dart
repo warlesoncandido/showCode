@@ -6,12 +6,14 @@ import 'package:http/http.dart' as http;
 import 'package:cardapio_show/helpers/pratos.dart';
 import 'package:flutter/material.dart';
 
+import '../error.dart';
+
 
  class Pages extends StatefulWidget {
 
-   String id;
-   Post res;
-   String nome;
+   String id;  // RECUPERANDO ID DO GRUPO  DA PAGINA ANTERIOR
+   Post res;    // RECUPERANDO DADOS DO RESTAURANTE DA PAGINA ANTERIOR
+   String nome; // RECUPERANDO O NOME DO GRUPO DA PAGINA ANTERIOR
     Pages(this.nome,this.res,this.id);
 
   @override
@@ -20,9 +22,26 @@ import 'package:flutter/material.dart';
 
 class _PagesState extends State<Pages> {
 
+  // REQUISIÇÃO HTTP QUE RETORNA OS PRATOS DOS GRUPOS DESEJADOS
+List<Pratos> prato = List();
+Future<List<Pratos>> _recuperarPratos(cod,id) async {
+    try{
+      http.Response response = await http.get("http://erp.addmob.com.br/lista_pratos?cod_registro=$cod&idgrupo=$id"); // REQUISIÇÃO GET
+      Map dados = json.decode(response.body); // RETORNANDO DADOS EM FORMATO JSON
+      prato.clear();  // LIMPANDO LISTA DE PRATOS
+      for(var p in dados['response']){  // PARA CADA PRATO ENCONTRADO ADICIONE A LISTA
+        Pratos pratos = Pratos(preco:p['preco'],relacaoPrato: p['relacao_prato'],nomePrato: p['nome_prato'],descricaoPrato: p['descricao_prato'],imagemPrato: p['url'],id_produto: p['id_produto'],id_grupo: p['id_grupo'] );
+        prato.add(pratos);    
+      }
+    }catch(e){
+       Navigator.push(context, MaterialPageRoute(builder: (context)=>Erro()));
+    }
+    return prato;
+  }
+
   @override
   Widget build(BuildContext context) {
-    
+      // INICIO DE LAYOUT
     return Container(
       padding: EdgeInsets.only(bottom: 25),
       child:  Column(
@@ -138,21 +157,6 @@ class _PagesState extends State<Pages> {
   }
 }
 
-// FUNÇÃO DE RETORNO DE PRATOS
-List<Pratos> prato = List();
-Future<List<Pratos>> _recuperarPratos(cod,id) async {
-    try{
-      http.Response response = await http.get("http://erp.addmob.com.br/lista_pratos?cod_registro=$cod&idgrupo=$id");
-      Map dados = json.decode(response.body);
-      prato.clear();
-      for(var p in dados['response']){ 
-        Pratos pratos = Pratos(preco:p['preco'],relacaoPrato: p['relacao_prato'],nomePrato: p['nome_prato'],descricaoPrato: p['descricao_prato'],imagemPrato: p['url'],id_produto: p['id_produto'],id_grupo: p['id_grupo'] );
-        prato.add(pratos);    
-      }
-    }catch(e){
-       if(e is SocketException) e.message;
-    }
-    return prato;
-  }
+
 
   

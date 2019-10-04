@@ -1,16 +1,16 @@
 import 'dart:convert';
-
 import 'package:cardapio_show/helpers/post.dart';
 import 'package:cardapio_show/pages/restaurante/pages.dart';
 import 'package:http/http.dart' as http;
 import 'package:cardapio_show/helpers/grupos.dart';
 import 'package:flutter/material.dart';
 import 'package:page_indicator/page_indicator.dart';
+import '../promo.dart';
 
 
 class Res_Cardapio extends StatefulWidget {
-    Post data;
-    Res_Cardapio(this.data);
+    Post data;                // RECEBENDO DADOS DA PAGINA ANTERIOR
+    Res_Cardapio(this.data);  // INSTANCIANDO COMO DATA
   @override
   _Res_CardapioState createState() => _Res_CardapioState();
 }
@@ -22,7 +22,7 @@ class _Res_CardapioState extends State<Res_Cardapio> {
 
 
   Widget build(BuildContext context) {
-  
+                                  // INICIO DE LAYOUT
         return Scaffold(
           body: Padding(
             padding: EdgeInsets.only(top: 25, left: 5, right:5 , bottom: 5 ),
@@ -57,7 +57,7 @@ class _Res_CardapioState extends State<Res_Cardapio> {
                   Expanded(
                     flex: 1,
                     child: FutureBuilder<List<Grupos>>(
-                  future: _recuperandoGrupos(widget.data.codregistro),
+                  future: _recuperandoGrupos(widget.data.codregistro,context),
                   builder: (context,snapshot){
                      switch(snapshot.connectionState){
                                 case ConnectionState.none:
@@ -105,22 +105,22 @@ class _Res_CardapioState extends State<Res_Cardapio> {
   }
 }
 
-// FUNCAO DE RETORNO DE GRUPOS
+// FREQUISIÇÃO DE RETORNO DE GRUPOS
  List<Grupos> grupos = List();
- Future<List<Grupos>> _recuperandoGrupos(cod) async {
+ Future<List<Grupos>> _recuperandoGrupos(cod,context) async {
     try{
-      http.Response response = await http.get("http://erp.addmob.com.br/listar_grupos?cod_registro=$cod");
-    Map dados = json.decode(response.body);
-    grupos.clear();
+      http.Response response = await http.get("http://erp.addmob.com.br/listar_grupos?cod_registro=$cod"); // REQUISIÇÃO GET
+    Map dados = json.decode(response.body);   // RETORNANDO DADOS EM FORMATO JSON
+    grupos.clear();   // LIMPANDO LISTA DE GRUPOS
 
-    for(var g in dados['response']){ 
-        if(g['filhos'].length == 0){
+    for(var g in dados['response']){  // PARA CADA GRUPO ENCONTRADO
+        if(g['filhos'].length == 0){  // SE NÃO HOUVER FILHOS RECUPERA O NOME DO GRUPO
           Grupos tabs = Grupos(
             g['id_grupo'],
             g['nome_grupo'],
             );
             grupos.add(tabs);
-        } else{
+        } else{                         // SE HOUVER FILHOS RECUPERA O NOME DOS SUBGRUPOS
           for (var f in g['filhos']){
             Grupos tabs = Grupos(
             f['id_grupo'],
@@ -132,7 +132,7 @@ class _Res_CardapioState extends State<Res_Cardapio> {
     }
       
     }catch(e){
-       
+       Navigator.push(context, MaterialPageRoute(builder: (context)=>Promo()));
     }
     return grupos;
   }

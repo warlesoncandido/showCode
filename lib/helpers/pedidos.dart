@@ -23,6 +23,7 @@ class Pedidos {
   String idCelular;
   String idCliente;
   String pedido;
+  String total;
   int statusCode;
 
   Pedidos(
@@ -38,6 +39,7 @@ class Pedidos {
       this.idCelular,
       this.idCliente,
       this.pedido,
+      this.total,
       this.statusCode});
 
   Pedidos.fromJson(Map<String, dynamic> json) {
@@ -53,6 +55,7 @@ class Pedidos {
     idCelular = json['id_celular'];
     idCliente = json['id_cliente'];
     pedido = json['pedido'];
+    total = json['total'];
     statusCode = json['statusCode'];
   }
 
@@ -70,6 +73,7 @@ class Pedidos {
     data['id_celular'] = this.idCelular;
     data['id_cliente'] = this.idCliente;
     data['pedido'] = this.pedido;
+    data['total'] = this.total;
     data['statusCode'] = this.statusCode;
     return data;
   }

@@ -1,63 +1,27 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:cardapio_show/helpers/post.dart';
+import 'package:cardapio_show/pages/promo.dart';
 import 'package:cardapio_show/pages/restaurante/menu_restaurante.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
-List<Post> postagens = List();
+
+
 class Cardapio extends StatefulWidget {
+
+  String idgosto;
+  Cardapio(this.idgosto);
   @override
   _CardapioState createState() => _CardapioState();
 }
 class _CardapioState extends State<Cardapio> {
-  String _url = "http://erp.addmob.com.br/lista_restaurante";
+
+  // REQUISIÇÃO HTTP PARA RECUPERAR OS RETAURANTES
   
-  Future<List<Post>> _recuperandoRestaurante() async {
-    try{
-        http.Response response = await http.get(_url);
-        Map dados = json.decode(response.body);
-        postagens.clear();
-        for(var post in dados['response']){ 
-          Post rest = Post(
-                            razaosocial:post['razaosocial'],
-                            numeroendereco:post['numeroendereco'] ,
-                            quantidadeDispositivos: post['quantidadeDispositivos'],
-                            site: post['site'],
-                            pais: post['pais'],
-                            estacionamento: post['estacionamento'],
-                            complemento: post['complemento'],
-                            manobrista: post['manobrista'],
-                            playground: post['playground'],
-                            telefone: post['telefone'],
-                            latitude: post['latitude'],
-                            email: post['email'],
-                            descricao: post['descricao'],
-                            cnpj: post['cnpj'],
-                            tipoEmpresa: post['tipoEmpresa'],
-                            bairro: post['bairro'],
-                            temcardapio: post['temcardapio'],
-                            cep: post['cep'],
-                            logoempresa: post['logoempresa'],
-                            facebook: post['facebook'],
-                            instagram: post['instagram'],
-                            estado: post['estado'],
-                            codregistro: post['codregistro'],
-                            url: post['url'],
-                            cidade: post['cidade'],
-                            imagemMenu: post['imagemMenu'],
-                            longitude: post['longitude'] ,
-                            quantidadeAcessos:post['quantidadeAcessos']  ,
-                            endereco: post['endereco']
-          );  
-          postagens.add(rest);  
-    }
-    }catch(e){
-       if(e is SocketException) Navigator.pop(context);
-    }
-    return postagens;
-  }
+
+// INCIO DE LAYOUT
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,7 +59,7 @@ class _CardapioState extends State<Cardapio> {
                     Expanded(
                         flex: 1,
                         child: FutureBuilder<List<Post>>(
-                             future: _recuperandoRestaurante(),
+                             future: _recuperandoRestaurante(context,widget.idgosto),
                             builder: (context,snapshot){
                               switch(snapshot.connectionState){
                                 case ConnectionState.none:
@@ -115,6 +79,7 @@ class _CardapioState extends State<Cardapio> {
                                           );
                                         }else{
                                           return ListView.builder(
+                                            scrollDirection: Axis.vertical,
                                       itemCount: snapshot.data.length,
                                       itemBuilder: (context,index){
                                         return GestureDetector(
@@ -165,6 +130,43 @@ class _CardapioState extends State<Cardapio> {
     );
   }
 }
+List<Post> postagens = List();
+Future<List<Post>> _recuperandoRestaurante(context,idgosto) async {
+    try{
+        http.Response response = await http.get("http://erp.addmob.com.br/listar_gosto?id_gosto=$idgosto");  // REQUISIÇÃO GET 
+        Map dados = json.decode(response.body);         // RETORNANDO DADOS EM FORMATO JSON
+        postagens.clear();                              // LIMPANDO A LISTA
+        var lista = dados['response'];
+        for(var post in lista){             // PARA CADA JSON ADD EM UMA LISTA
+          for(var p in post["restaurantes"]){
+            // GUARDADNDO OS DADOS NA CLASSE POST
+            
+          Post post = Post();
 
+          post.razaosocial = p['razaosocial'];
+          post.tipoEmpresa = p['tipo_empresa'];
+          post.bairro = p['bairro'];
+          post.numeroendereco = p['numeroendereco'];
+          post.site = p['site'];
+          post.url = p['logoempresa'];
+          post.cep = p['cep'];
+          post.complemento = p['complemento'];
+          post.estado = p['estado'];
+          post.codregistro = p['codregistro'];
+          post.endereco = p['end'];
+          post.cidade = p['cidade'];
+          post.telefone = p['telefone'];
+          post.email = p['email'];
+          post.facebook = p['facebook'];
+          postagens.add(post); 
+          }
+             
+      }
+    }catch(e){
+        Navigator.push(context,MaterialPageRoute(builder:(context)=> Promo() ));
+     }
+    return postagens;
+  }
+  
 
 

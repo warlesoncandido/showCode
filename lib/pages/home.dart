@@ -144,10 +144,7 @@ class Login extends StatelessWidget {
                               phoneController.text);
                               user.post();
                             }
-                            Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Cardapio()),
-                            );
+                            
                       }
                     },
                     textColor: Colors.white,

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'fechar.dart';
-
+                                            // PAGINA DE NAVEGAÇÃO DO RESTAURANTE
 class Menu extends StatefulWidget {
 
     Post data;

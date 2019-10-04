@@ -1,9 +1,11 @@
-import 'package:toast/toast.dart';
+
 import 'package:cardapio_show/helpers/pedidos.dart';
 import 'package:cardapio_show/helpers/post.dart';
 import 'package:cardapio_show/helpers/pratos.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../error.dart';
 
 TextEditingController mesaController = TextEditingController();
 Pratos prato = Pratos();
@@ -14,8 +16,8 @@ double preco;
 
 class Sobre_Restaurante extends StatefulWidget {
   
-   Pratos data;
-   Post rest;
+   Pratos data; // RECUPERANDO DADOS DO PRATO DA PAGINA ANTERIOR
+   Post rest;   // RECUPERANDO DADOS DO  RESTAURANTE
    Sobre_Restaurante(this.data, this.rest);
   @override
   _SobreState createState() => _SobreState();
@@ -24,14 +26,11 @@ class _SobreState extends State<Sobre_Restaurante> {
  
  @override
   void initState(){
-    
     super.initState();
     unidade = 1;
-    preco = double.parse(widget.data.preco);
-    
-    
+    preco = double.parse(widget.data.preco); 
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,6 +136,9 @@ class _SobreState extends State<Sobre_Restaurante> {
                                                            child: Text("Adicionar"),
                                                            onPressed: ()async{
                                                              SharedPreferences prefs = await SharedPreferences.getInstance();
+                                                                setState(() {
+                                                                 mesaController.text = prefs.get("mesa") ==  null || prefs.getString("mesa") == "" ? " " :prefs.getString("mesa") ; 
+                                                                });
                                                                 if(prefs.getString("idrestaurante") == "" || prefs.getString("idrestaurante") == null){
                                                                 prefs.setString("idrestaurante", widget.rest.codregistro);
                                                               }
@@ -161,15 +163,13 @@ class _SobreState extends State<Sobre_Restaurante> {
                                                               }else{
                                                                 showDialog(
                                                                 context: context,
-                                                                builder: (context) {
+                                                                builder: (context){
                                                                   return AlertDialog(
                                                                     title: TextField(
                                                                       textAlign: TextAlign.center,
                                                                       keyboardType: TextInputType.number,
                                                                       controller: mesaController,
-                                                                      onChanged: (text){
-                                                                        text = prefs.getString("mesa");
-                                                                      },
+                                                                      
                                                                       readOnly: prefs.getString("mesa") == null || prefs.getString("mesa") == "" ? false : true,
                                                                       decoration: InputDecoration(
                                                                         labelText: prefs.getString("mesa") == null || prefs.getString("mesa") == "" ? "Confirme sua mesa" : "Sua mesa:",
@@ -244,7 +244,6 @@ String format(double n) {
 adiconarPedido(Pratos prato,Post restaurante,context)async{
   try{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-     print(prato.id_produto);
      pedidos.codPedidoVendasc = prefs.getString("cod") == "" || prefs.getString("cod") == null ? "" : prefs.getString("cod");
      pedidos.idMesa = mesaController.text;
      pedidos.idVendedor = "01";
@@ -259,8 +258,10 @@ adiconarPedido(Pratos prato,Post restaurante,context)async{
                                                 
      pedidos.fazendoPedido(restaurante.codregistro,context);
      prefs.setString("mesa", mesaController.text);
+     
      pedidos.setItem();
   }catch (e){  
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>Erro()));
   }    
 }
         

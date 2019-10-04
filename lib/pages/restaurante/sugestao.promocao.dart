@@ -1,10 +1,10 @@
 import 'dart:convert';
-
 import 'package:cardapio_show/pages/restaurante/sobre_restaurante.dart';
 import 'package:http/http.dart' as http;
 import 'package:cardapio_show/helpers/post.dart';
 import 'package:cardapio_show/helpers/pratos.dart';
 import 'package:flutter/material.dart';
+import '../promo.dart';
 
 class Sugestao extends StatefulWidget {
   @override
@@ -60,7 +60,7 @@ class _SugestaoState extends State<Sugestao> {
                     Expanded(
                       flex: 1,
                       child: FutureBuilder(
-                            future: _recuperarPratos(widget.post.codregistro,widget.opcao),
+                            future: _recuperarPratos(widget.post.codregistro,widget.opcao,context),
                             builder: (context,snapshot){
                               switch(snapshot.connectionState){
                                 case ConnectionState.none:
@@ -163,7 +163,7 @@ class _SugestaoState extends State<Sugestao> {
 
 
 List<Pratos> listprato = List();
-Future<List<Pratos>> _recuperarPratos(cod, opcao) async {
+Future<List<Pratos>> _recuperarPratos(cod, opcao,context) async {
     http.Response response;
     try{
       if(opcao == "sugestao"){
@@ -178,7 +178,7 @@ Future<List<Pratos>> _recuperarPratos(cod, opcao) async {
         listprato.add(pratos); 
     }
     }catch(e){
-       
+       Navigator.push(context, MaterialPageRoute(builder: (context)=>Promo()));
     }
     return listprato;
   }

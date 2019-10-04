@@ -1,11 +1,11 @@
-import 'package:cardapio_show/pages/home.dart';
+import 'package:cardapio_show/splashScreen.dart';
 import 'package:flutter/material.dart';
 
 
 void main(){
   
   runApp(MaterialApp(
-    home: Login(),
+    home: splashScreen(),
     debugShowCheckedModeBanner: false,
     
   ));
