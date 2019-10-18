@@ -1,22 +1,30 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:cardapio_show/helpers/promocao.dart';
-import 'package:cardapio_show/pages/cardapio.dart';
+import 'package:cardapio_show/helpers/user.dart';
+import 'package:cardapio_show/navegacao/cardapio.dart';
+import 'package:cardapio_show/navegacao/login.dart';
 import 'package:cardapio_show/pages/cardpromo.dart';
-import 'package:cardapio_show/pages/error.dart';
-import 'package:flutter/services.dart';
+import 'package:cardapio_show/pages/drawer/drawer.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+
+
+User user = User();
 class Promo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown
-  ]); 
-    return Scaffold(
-      
+     
+     verificandoUsuario()async{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      if(prefs.getString("idUser") == "" || prefs.getString("idUser") == null){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>Loginv()));   
+      }
+    }
+  verificandoUsuario();
+    return Scaffold(  
       backgroundColor: Color.fromRGBO(245, 245, 245,1),
       body:  Padding(
                 padding: EdgeInsets.only(top: 25,left: 10 , right: 10),
@@ -30,7 +38,7 @@ class Promo extends StatelessWidget {
                           IconButton(
                               icon: Icon(Icons.navigate_before),
                               onPressed: (){
-                                Navigator.pop(context);
+                               
                               }),    
                           Container(
                             height: 50,
@@ -56,14 +64,14 @@ class Promo extends StatelessWidget {
                             child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text("Hoje quero:",
+                              Text("Hoje quero",
                                 style: TextStyle(
                                   fontSize: 19,
                                   color: Colors.black,
-                                  fontWeight: FontWeight.bold
+                                  fontWeight: FontWeight.w400
                                 )),
                                 Container( 
-                                  height: 250,
+                                  
                                   child: Column(
                                     children: <Widget>[
                                       Container(
@@ -75,13 +83,15 @@ class Promo extends StatelessWidget {
                                               child: Column(
                                               children: <Widget>[
                                                 Container(
+                                                  margin: EdgeInsets.only(bottom: 5),
                                                   height: 70,
                                                   width: 70,
                                                   child: CircleAvatar(
-                                                    backgroundImage: NetworkImage("https://www.estadosecapitaisdobrasil.com/wp-content/uploads/2015/02/arroz-carreteiro.jpg"),
+                                                    backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/mineira.jpg"),
                                                   ),
                                                 ),
-                                                Text("Mineira")
+                                                Text("Mineira",style: 
+                                                TextStyle(fontSize: 13 ),)
                                               ],
                                             ),
                                             onTap: (){
@@ -94,55 +104,63 @@ class Promo extends StatelessWidget {
                                               child: Column(
                                               children: <Widget>[
                                                 Container(
+                                                  margin: EdgeInsets.only(bottom: 5),
                                                   height: 70,
                                                   width: 70,
                                                   child: CircleAvatar(
-                                                    backgroundImage: NetworkImage("https://www.portaldofranchising.com.br/wp-content/uploads/2016/05/franquias-de-bebidas1.jpg"),
+                                                    backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/contemporanea.jpg"),
                                                   ),
                                                 ),
-                                                Text("Bebidas")
-                                              ],
-                                            ),
-                                            onTap: (){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("7")));
-                                            },
-                                            )
-                                          ),
-                                          Expanded(
-                                            child: GestureDetector(
-                                              child: Column(
-                                              children: <Widget>[
-                                                Container(
-                                                  height: 70,
-                                                  width: 70,
-                                                  child: CircleAvatar(
-                                                    backgroundImage: NetworkImage("http://www.dicassaopaulo.com.br/wp-content/uploads/2015/09/600x400xvirado-0.jpeg.pagespeed.ic.4rlOVnVf3j.jpg"),
-                                                  ),
-                                                ),
-                                                Text("Paulista")
-                                              ],
-                                            ),
-                                            onTap: (){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("2")));
-                                            },
-                                            )
-                                          ),
-                                          Expanded(
-                                            child: GestureDetector(
-                                              child: Column(
-                                              children: <Widget>[
-                                                Container(
-                                                  height: 70,
-                                                  width: 70,
-                                                  child: CircleAvatar(
-                                                    backgroundImage: NetworkImage("http://www.irmaosgaspar.com.br/images/bifedechorizoirmaosgaspar.jpg"),
-                                                  ),
-                                                ),
-                                                Text("Argentina")
+                                                Text("Contemporânea",style: 
+                                                TextStyle(fontSize: 13 ),)
                                               ],
                                             ),
                                             onTap: (){
                                               Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("3")));
+                                            },
+                                            )
+                                          ),
+                                          Expanded(
+                                            child: GestureDetector(
+                                              child: Column(
+                                                
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.only(bottom: 5),
+                                                  height: 70,
+                                                  width: 70,
+                                                  child: CircleAvatar(
+                                                    backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/peixes.jpg"),
+                                                  ),
+                                                ),
+                                                Text("Peixes",style: 
+                                                TextStyle(fontSize: 13 ),
+                                                )
+                                              ],
+                                            ),
+                                            onTap: (){
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("4")));
+                                            },
+                                            )
+                                          ),
+                                          Expanded(
+                                            child: GestureDetector(
+                                              child: Column(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.only(bottom: 5),
+                                                  height: 70,
+                                                  width: 70,
+                                                  child: CircleAvatar(
+                                                    backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/petisco.jpeg"),
+                                                  ),
+                                                ),
+                                                Text("Bar / Petisco",style: 
+                                                TextStyle(fontSize: 13 ),)
+                                              ],
+                                            ),
+                                            onTap: (){
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("5")));
                                             },
                                             )
                                           ), 
@@ -158,51 +176,15 @@ class Promo extends StatelessWidget {
                                               child: Column(
                                               children: <Widget>[
                                                 Container(
+                                                  margin: EdgeInsets.only(bottom: 5),
                                                   height: 70,
                                                   width: 70,
                                                   child: CircleAvatar(
-                                                    backgroundImage: NetworkImage("http://moinhoglobo.com.br/wp-content/uploads/2019/02/01-massa-pizza.png"),
+                                                    backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/italiana.jpg"),
                                                   ),
                                                 ),
-                                                Text("Pizzaria")
-                                              ],
-                                            ),
-                                            onTap: (){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("4")));
-                                            },
-                                            )
-                                          ),
-                                          Expanded(
-                                            child: GestureDetector(
-                                              child: Column(
-                                              children: <Widget>[
-                                                Container(
-                                                  height: 70,
-                                                  width: 70,
-                                                  child: CircleAvatar(
-                                                    backgroundImage: NetworkImage("https://abrilvejario.files.wordpress.com/2017/12/1-foto-2-notas-le-max_duro-de-matar.jpg?quality=70&strip=info&w=1024"),
-                                                  ),
-                                                ),
-                                                Text("Hamburgueria")
-                                              ],
-                                            ),
-                                            onTap: (){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("5")));
-                                            },
-                                            )
-                                          ),
-                                         Expanded(
-                                            child: GestureDetector(
-                                              child: Column(
-                                              children: <Widget>[
-                                                Container(
-                                                  height: 70,
-                                                  width: 70,
-                                                  child: CircleAvatar(
-                                                    backgroundImage: NetworkImage("https://www.360meridianos.com/wp-content/uploads/2017/06/guay-jub-comida-tailandesa.jpg"),
-                                                  ),
-                                                ),
-                                                Text("Tailandesa")
+                                                Text("Italiana / Pizza",style: 
+                                                TextStyle(fontSize: 13 ),)
                                               ],
                                             ),
                                             onTap: (){
@@ -215,17 +197,60 @@ class Promo extends StatelessWidget {
                                               child: Column(
                                               children: <Widget>[
                                                 Container(
+                                                  margin: EdgeInsets.only(bottom: 5),
                                                   height: 70,
                                                   width: 70,
                                                   child: CircleAvatar(
-                                                    backgroundImage: NetworkImage("https://rodoviariaonline.com.br/wp-content/uploads/2018/10/voce-nao-pode-deixar-passar-festas-4-comidas-tipicas-de-salvador-4-640x427.jpg"),
+                                                    backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/hamburguer.jpg"),
                                                   ),
                                                 ),
-                                                Text("Baiana")
+                                                Text("Hamburgueria",style: 
+                                                TextStyle(fontSize: 13 ),)
                                               ],
                                             ),
                                             onTap: (){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("8")));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("7")));
+                                            },
+                                            )
+                                          ),
+                                         Expanded(
+                                            child: GestureDetector(
+                                              child: Column(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.only(bottom: 5),
+                                                  height: 70,
+                                                  width: 70,
+                                                  child: CircleAvatar(
+                                                    backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/brasileira.jpg"),
+                                                  ),
+                                                ),
+                                                Text("Brasileira",style: 
+                                                TextStyle(fontSize: 13 ),)
+                                              ],
+                                            ),
+                                            onTap: (){
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("8")));
+                                            },
+                                            )
+                                          ),
+                                          Expanded(
+                                            child: GestureDetector(
+                                              child: Column(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.only(bottom: 5),
+                                                  height: 70,
+                                                  width: 70,
+                                                  child: CircleAvatar(
+                                                    backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/japonesa.jpg"),
+                                                  ),
+                                                ),
+                                                Text("Japonesa")
+                                              ],
+                                            ),
+                                            onTap: (){
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("2")));
                                             },
                                             )
                                           ), 
@@ -240,13 +265,13 @@ class Promo extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 19,
                                   color: Colors.black,
-                                  fontWeight: FontWeight.bold
+                                  fontWeight: FontWeight.w400
                                 )),
                                 Container(
-                                   margin: EdgeInsets.only(top: 10),
+                                   margin: EdgeInsets.only(top: 20),
                                   height: 200,
                                   child: FutureBuilder<List<Promocao>>(
-                             future: _recuperandoPromo(context),
+                             future: _recuperandoPromo(context,"nao"),
                             builder: (context,snapshot){
                               switch(snapshot.connectionState){
                                 case ConnectionState.none:
@@ -297,26 +322,26 @@ class Promo extends StatelessWidget {
                                                 ),
                                                 Text(snapshot.data[index].nomepromocao,style: 
                                                 TextStyle(fontSize: 12,
-                                                fontWeight: FontWeight.bold,
+                                                fontWeight: FontWeight.w400,
                                                 color: Color.fromRGBO(252, 76, 2, 1)),),
                                                 Padding(
                                                   padding: EdgeInsets.only(top:5 ,bottom: 5),
                                                   child: Text(snapshot.data[index].nomecasa,style: 
                                                 TextStyle(fontSize: 15,
-                                                fontWeight: FontWeight.bold
+                                                fontWeight: FontWeight.w500
                                                 ),),
                                                 ),
                                                 Row(
                                                   children: <Widget>[
                                                     Expanded(
-                                                      child: Text("R\$ 58,00",style: 
+                                                      child: Text("R\$ ${double.parse(snapshot.data[index].precopromo).toStringAsFixed(2).replaceAll(".", ",")}",style: 
                                                 TextStyle(fontSize: 17,
                                                 color: Colors.black
                                                   ),
                                                 ), 
                                                     ),
                                                     Expanded(
-                                                      child:Text("R\$ 98,00",style: 
+                                                      child:Text("R\$ ${double.parse(snapshot.data[index].preconormal).toStringAsFixed(2).replaceAll(".", ",")}",style: 
                                                 TextStyle(fontSize: 15,
                                                 decoration: TextDecoration.lineThrough,
                                                 color: Colors.grey
@@ -334,22 +359,117 @@ class Promo extends StatelessWidget {
                               }
                             }
                         ),
-                                )
+                                ),
+                        //         Text("Roteiros de BH - Cidade da Gastronomia",
+                        //         style: TextStyle(
+                        //           fontSize: 19,
+                        //           color: Colors.black,
+                        //           fontWeight: FontWeight.bold
+                        //         )),
+                        //         Container(
+                        //            margin: EdgeInsets.only(top: 10),
+                        //           height: 200,
+                        //           child: FutureBuilder<List<Promocao>>(
+                        //      future: _recuperandoPromo(context,"s"),
+                        //     builder: (context,snapshot){
+                        //       switch(snapshot.connectionState){
+                        //         case ConnectionState.none:
+                        //         case ConnectionState.waiting:
+                        //           return Center(
+                        //             child: CircularProgressIndicator(),
+                        //           );
+                        //         default:
+                        //                 if(!snapshot.hasData){
+                        //                   Center(
+                        //                     child: Column(
+                        //                       children: <Widget>[
+                        //                         CircularProgressIndicator(),
+                        //                         Text("Aguarde")
+                        //                       ],
+                        //                     ),
+                        //                   );
+                        //                 }else{
+                        //                   return ListView.builder(
+                        //                     scrollDirection: Axis.horizontal,
+                        //               itemCount: snapshot.data.length,
+                        //               itemBuilder: (context,index){
+                        //                 return GestureDetector(
+                        //                   onTap: (){
+                                            
+                        //                   },
+                        //                   child:Container( 
+                        //                     margin: EdgeInsets.all(2),
+                        //                     width: 175,
+                        //                     height: 50,
+                        //                     decoration: BoxDecoration(
+                        //                       // border: Border.all(width: 0.2,color: Colors.grey),
+                        //                       borderRadius:BorderRadius.circular(5),
+                        //                     ),
+                        //                     child: Column(
+                        //                       crossAxisAlignment: CrossAxisAlignment.start,
+                        //                       children: <Widget>[
+                        //                         Container(
+                        //                           margin: EdgeInsets.only(bottom: 3),
+                        //                           height:100 ,
+                        //                           decoration: BoxDecoration(
+                        //                             borderRadius:BorderRadius.circular(5),
+                        //                             image: DecorationImage(
+                        //                               fit: BoxFit.cover,
+                        //                               image:NetworkImage(snapshot.data[index].imagem) )
+                        //                           )
+                        //                           ,
+                        //                         ),
+                        //                         Text(snapshot.data[index].nomepromocao,style: 
+                        //                         TextStyle(fontSize: 12,
+                        //                         fontWeight: FontWeight.bold,
+                        //                         color: Color.fromRGBO(252, 76, 2, 1)),),
+                                                 
+                        //                       ],
+                        //                     )
+                        //                   ) ,
+                        //                 );
+                        //               });
+                        //             }
+                        //       }
+                        //     }
+                        // ),
+                        //         )
                             ],
                           ),
                           )
                         ),
                     )
                   ],
-                )
+                ),
+            ),
+            
+            
+            
+            bottomNavigationBar: Container(
+              height: 50,
+              child: BottomAppBar(
+                notchMargin: 4.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                    IconButton(
+                      onPressed:(){
+                        showModalBottomSheet<void>(context: context, builder: (BuildContext context) {
+                          return  CustomDrawer();
+                        });
+                      } ,
+                      icon: Icon(Icons.menu),)
+                    
+              ],),
+            ),
             )
     );
   }
 }
 List<Promocao> promocoes = List();
-Future<List<Promocao>> _recuperandoPromo(context) async {
+Future<List<Promocao>> _recuperandoPromo(context,roteiro) async {
     try{
-        http.Response response = await http.get("http://erp.addmob.com.br/listar_promocao");  // REQUISIÇÃO GET 
+        http.Response response = await http.get("http://erp.addmob.com.br/listar_promocao?roteiro=$roteiro");  // REQUISIÇÃO GET 
         Map dados = json.decode(response.body); // RETORNANDO DADOS EM FORMATO JSON
         promocoes.clear();                             // LIMPANDO A LISTA
         for(var pro in dados['response']){             // PARA CADA JSON ADD EM UMA LISTA
@@ -365,14 +485,17 @@ Future<List<Promocao>> _recuperandoPromo(context) async {
             nomepromocao: pro['nomepromocao'],
             nomecasa: pro['nomecasa'],
             dtusoini: pro['dtusoini'],
-            dtusofim: pro['dtusofim']
+            dtusofim: pro['dtusofim'],
+            precopromo: pro['precoPromo'],
+            preconormal: pro['precoNormal']
           );
           
           promocoes.add(p);      
     }
     
     }catch(e){
-       Navigator.push(context, MaterialPageRoute(builder: (context)=>Erro()));
+       Navigator.pushNamedAndRemoveUntil(context, "erro",(_) => false);
     }
     return promocoes;
   }
+

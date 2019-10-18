@@ -4,8 +4,8 @@ class Pratos {
   String nomePrato;
   String descricaoPrato;
   String imagemPrato;
-  String id_produto;
-  String id_grupo;
+  String idProduto;
+  String idGrupo;
 
   Pratos(
       {this.preco,
@@ -13,8 +13,8 @@ class Pratos {
       this.nomePrato,
       this.descricaoPrato,
       this.imagemPrato,
-      this.id_produto,
-      this.id_grupo});
+      this.idProduto,
+      this.idGrupo});
 
   Pratos.fromJson(Map<String, dynamic> json) {
     preco = json['preco'];
@@ -22,8 +22,8 @@ class Pratos {
     nomePrato = json['nome_prato'];
     descricaoPrato = json['descricao_prato'];
     imagemPrato = json['imagem_prato'];
-    id_produto = json['id_produto'];
-    id_grupo = json['id_grupo'];
+    idProduto = json['id_produto'];
+    idGrupo = json['id_grupo'];
   }
 
   Map<String, dynamic> toJson() {
@@ -33,8 +33,8 @@ class Pratos {
     data['nome_prato'] = this.nomePrato;
     data['descricao_prato'] = this.descricaoPrato;
     data['imagem_prato'] = this.imagemPrato;
-    data['id_produto'] = this.id_produto;
-    data['id_grupo'] = this.id_grupo;
+    data['id_produto'] = this.idProduto;
+    data['id_grupo'] = this.idGrupo;
     return data;
   }
 }

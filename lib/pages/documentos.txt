@@ -1,0 +1,19 @@
+ CAMPOS ONDE OS DADOS SAO SALVOS NO SHARED PREFERENCES
+
+ MESA DO USUARIO -> prefs.getString("mesa");
+ ID DO RESTAURANTE -> prefs.getString("idrestaurante");
+
+
+
+ ID DO USUARIO -> prefs.getString("idUser");
+
+ NOME DO USUARIO -> prefs.getString("nomeUser");
+
+ SENHA DO USUARIO -> prefs.getString("senhaUser");
+
+ TELEFONE DO USUARIO -> prefs.getString("phoneUser");
+
+ EMAIL DO USUARIO -> prefs.setString("emailUser");
+ 
+ CPF DO USUARIO -> prefs.setString("cpfUser");
+

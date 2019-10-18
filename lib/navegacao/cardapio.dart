@@ -1,12 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:cardapio_show/helpers/post.dart';
-import 'package:cardapio_show/pages/promo.dart';
+import 'package:cardapio_show/helpers/user.dart';
+import 'package:cardapio_show/pages/drawer/drawer.dart';
 import 'package:cardapio_show/pages/restaurante/menu_restaurante.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
 
+User user = User();
 
 class Cardapio extends StatefulWidget {
 
@@ -24,6 +27,7 @@ class _CardapioState extends State<Cardapio> {
 
   @override
   Widget build(BuildContext context) {
+    user.verificandoUsuario(context);
     return Scaffold(
       backgroundColor: Color.fromRGBO(245, 245, 245,1),
       body:   Padding(
@@ -84,7 +88,7 @@ class _CardapioState extends State<Cardapio> {
                                       itemBuilder: (context,index){
                                         return GestureDetector(
                                           onTap: (){
-                                             Navigator.push(context, MaterialPageRoute(builder: (context)=>Menu(snapshot.data[index])));
+                                            //  Navigator.push(context, MaterialPageRoute(builder: (context)=>Menu(snapshot.data[index])));
                                           },
                                           child: Card(
                                             elevation: 5,
@@ -123,10 +127,30 @@ class _CardapioState extends State<Cardapio> {
                               }
                             }
                         )
-                    )
+                    ) 
                   ],
                 )
-            )
+                
+            ),
+
+            bottomNavigationBar: Container(
+              height: 50,
+              child: BottomAppBar(
+                notchMargin: 4.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                    IconButton(
+                      onPressed:(){
+                        showModalBottomSheet<void>(context: context, builder: (BuildContext context) {
+                          return  CustomDrawer();
+                        });
+                      } ,
+                      icon: Icon(Icons.menu),)
+                    
+              ],),
+            ),
+            )   
     );
   }
 }
@@ -137,8 +161,8 @@ Future<List<Post>> _recuperandoRestaurante(context,idgosto) async {
         Map dados = json.decode(response.body);         // RETORNANDO DADOS EM FORMATO JSON
         postagens.clear();                              // LIMPANDO A LISTA
         var lista = dados['response'];
-        for(var post in lista){             // PARA CADA JSON ADD EM UMA LISTA
-          for(var p in post["restaurantes"]){
+        for(var p in lista){             // PARA CADA JSON ADD EM UMA LISTA
+          
             // GUARDADNDO OS DADOS NA CLASSE POST
             
           Post post = Post();
@@ -159,11 +183,13 @@ Future<List<Post>> _recuperandoRestaurante(context,idgosto) async {
           post.email = p['email'];
           post.facebook = p['facebook'];
           postagens.add(post); 
-          }
+          
              
       }
     }catch(e){
-        Navigator.push(context,MaterialPageRoute(builder:(context)=> Promo() ));
+        if(e is SocketException){
+          Navigator.pushNamedAndRemoveUntil(context, "erro",(_) => false);
+        }
      }
     return postagens;
   }

@@ -1,10 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:cardapio_show/helpers/pedidos.dart';
 import 'package:cardapio_show/helpers/post.dart';
+import 'package:cardapio_show/pages/drawer/drawer.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../promo.dart';
 
 
 var mesa;
@@ -23,6 +24,9 @@ class _FecharState extends State<Fechar> {
   @override
   Widget build(BuildContext context){
     
+    setState(() {
+      
+    });
      
     return  Scaffold(
       backgroundColor: Color.fromRGBO(245, 245, 245,1), 
@@ -177,7 +181,25 @@ class _FecharState extends State<Fechar> {
                     )
                     
                ] )
-    )
+    ),
+    bottomNavigationBar: Container(
+              height: 50,
+              child: BottomAppBar(
+                notchMargin: 4.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                    IconButton(
+                      onPressed:(){
+                        showModalBottomSheet<void>(context: context, builder: (BuildContext context) {
+                          return  CustomDrawer();
+                        });
+                      } ,
+                      icon: Icon(Icons.menu),)
+                    
+              ],),
+            ),
+            )
     );
   }
 }
@@ -203,7 +225,7 @@ Future<List<Pedidos>> _recuperandoPedidos(cod,context) async {
                         }
                         return pedidos;              
     }catch(e){
-       Navigator.push(context, MaterialPageRoute(builder: (context)=>Promo()));
+       Navigator.pushNamedAndRemoveUntil(context, "erro",(_) => false);
     }
     
 }

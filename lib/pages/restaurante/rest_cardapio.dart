@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:cardapio_show/helpers/post.dart';
-import 'package:cardapio_show/pages/restaurante/pages.dart';
+import 'package:cardapio_show/navegacao/inicio.dart';
+import 'package:cardapio_show/pages/drawer/drawer.dart';
+import 'package:cardapio_show/pages/restaurante/rest_pages.dart';
 import 'package:http/http.dart' as http;
 import 'package:cardapio_show/helpers/grupos.dart';
 import 'package:flutter/material.dart';
 import 'package:page_indicator/page_indicator.dart';
-import '../promo.dart';
+
 
 
 class Res_Cardapio extends StatefulWidget {
@@ -99,7 +101,26 @@ class _Res_CardapioState extends State<Res_Cardapio> {
                 ],
               ),
             
-          )
+          ),
+          bottomNavigationBar: Container(
+              height: 50,
+              child: BottomAppBar(
+                notchMargin: 4.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                    IconButton(
+                      onPressed:(){
+                        showModalBottomSheet<void>(context: context, builder: (BuildContext context) {
+                          return  CustomDrawer();
+                        });
+                      } ,
+                      icon: Icon(Icons.menu),)
+                    
+              ],),
+            ),
+            ),
+            
         );
     
   }

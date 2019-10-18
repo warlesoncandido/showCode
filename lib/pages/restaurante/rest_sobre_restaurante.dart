@@ -2,10 +2,10 @@
 import 'package:cardapio_show/helpers/pedidos.dart';
 import 'package:cardapio_show/helpers/post.dart';
 import 'package:cardapio_show/helpers/pratos.dart';
+import 'package:cardapio_show/navegacao/error.dart';
+import 'package:cardapio_show/pages/drawer/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../error.dart';
 
 TextEditingController mesaController = TextEditingController();
 Pratos prato = Pratos();
@@ -230,7 +230,25 @@ class _SobreState extends State<Sobre_Restaurante> {
                ] 
               ),
           )
-        )
+        ),
+        bottomNavigationBar: Container(
+              height: 50,
+              child: BottomAppBar(
+                notchMargin: 4.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                    IconButton(
+                      onPressed:(){
+                        showModalBottomSheet<void>(context: context, builder: (BuildContext context) {
+                          return  CustomDrawer();
+                        });
+                      } ,
+                      icon: Icon(Icons.menu),)
+                    
+              ],),
+            ),
+            )
       );
     }
   }
@@ -248,7 +266,7 @@ adiconarPedido(Pratos prato,Post restaurante,context)async{
      pedidos.idMesa = mesaController.text;
      pedidos.idVendedor = "01";
      pedidos.quantidadeProduto = unidade.toString();
-     pedidos.idProduto = prato.id_produto.toString();
+     pedidos.idProduto = prato.idProduto.toString();
      pedidos.precoProduto = prato.preco.replaceAll(".", ",");
      pedidos.quantidadeOpcional = "0";
      pedidos.idOpcional = "0";

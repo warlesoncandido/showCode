@@ -1,24 +1,32 @@
 import 'dart:async';
-import 'package:cardapio_show/pages/promo.dart';
+
 import 'package:flutter/material.dart';
 import 'package:progress_indicators/progress_indicators.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class splashScreen extends StatefulWidget {
+class SplashScreen extends StatefulWidget {
   @override
-  _splashScreenState createState() => _splashScreenState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _splashScreenState extends State<splashScreen> {
+class _SplashScreenState extends State<SplashScreen> {
 
   Future<Timer> loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
   return new Timer(Duration(seconds: 3), (){
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Promo()));
+
+    if(prefs.getString("idUser")== "" || prefs.getString("idUser")== null ){
+      Navigator.pushReplacementNamed(context, "login");
+    }else{
+      Navigator.pushReplacementNamed(context, "inicio");
+    }
+    
   });
 }
 
   @override
   void initState() {
-    // TODO: implement initState
+    
     super.initState();
 
     loadData();

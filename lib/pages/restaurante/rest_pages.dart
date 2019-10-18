@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:cardapio_show/helpers/post.dart';
-import 'package:cardapio_show/pages/restaurante/sobre_restaurante.dart' as prefix1;
+import 'package:cardapio_show/pages/restaurante/rest_sobre_restaurante.dart' as prefix1;
 import 'package:http/http.dart' as http;
 import 'package:cardapio_show/helpers/pratos.dart';
 import 'package:flutter/material.dart';
 
-import '../error.dart';
 
 
  class Pages extends StatefulWidget {
@@ -30,11 +28,11 @@ Future<List<Pratos>> _recuperarPratos(cod,id) async {
       Map dados = json.decode(response.body); // RETORNANDO DADOS EM FORMATO JSON
       prato.clear();  // LIMPANDO LISTA DE PRATOS
       for(var p in dados['response']){  // PARA CADA PRATO ENCONTRADO ADICIONE A LISTA
-        Pratos pratos = Pratos(preco:p['preco'],relacaoPrato: p['relacao_prato'],nomePrato: p['nome_prato'],descricaoPrato: p['descricao_prato'],imagemPrato: p['url'],id_produto: p['id_produto'],id_grupo: p['id_grupo'] );
+        Pratos pratos = Pratos(preco:p['preco'],relacaoPrato: p['relacao_prato'],nomePrato: p['nome_prato'],descricaoPrato: p['descricao_prato'],imagemPrato: p['url'],idProduto: p['id_produto'],idGrupo: p['id_grupo'] );
         prato.add(pratos);    
       }
     }catch(e){
-       Navigator.push(context, MaterialPageRoute(builder: (context)=>Erro()));
+       Navigator.pushNamedAndRemoveUntil(context, "erro",(_) => false);
     }
     return prato;
   }

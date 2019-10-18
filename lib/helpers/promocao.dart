@@ -10,6 +10,9 @@ class Promocao {
   String nomecasa;
   String dtusoini;
   String dtusofim;
+  String precopromo;
+  String preconormal;
+  String cupom;
 
   Promocao({
       this.codregistro,
@@ -22,7 +25,10 @@ class Promocao {
       this.nomepromocao,
       this.nomecasa,
       this.dtusoini,
-      this.dtusofim});
+      this.dtusofim,
+      this.precopromo,
+      this.preconormal,
+      this.cupom});
 
   Promocao.fromJson(Map<String, dynamic> json) {
     codregistro = json['codregistro'];
@@ -36,6 +42,9 @@ class Promocao {
     nomecasa = json['nomecasa'];
     dtusoini = json['dtusoini'];
     dtusofim = json['dtusofim'];
+    precopromo = json['precopromo'];
+    preconormal = json['preconormal'];
+    cupom = json['cupom'];
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +60,9 @@ class Promocao {
     data['nomecasa'] = this.nomecasa;
     data['dtusoini'] = this.dtusoini;
     data['dtusofim'] = this.dtusofim;
+    data['precoPromo'] = this.precopromo;
+    data['precoNormal'] = this.preconormal;
+    data['cupom'] = this.cupom;
     return data;
   }
 }

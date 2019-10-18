@@ -1,12 +1,14 @@
 import 'package:cardapio_show/helpers/post.dart';
-import 'package:cardapio_show/pages/restaurante/reservas.dart';
+import 'package:cardapio_show/helpers/user.dart';
+import 'package:cardapio_show/pages/drawer/drawer.dart';
+import 'package:cardapio_show/pages/restaurante/rest_reservas.dart';
 import 'package:cardapio_show/pages/restaurante/rest_cardapio.dart';
-import 'sugestao.promocao.dart';
+import 'package:cardapio_show/pages/restaurante/rest_fechar.dart';
+import 'rest_sugestao.promocao.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'fechar.dart';
-                                            // PAGINA DE NAVEGAÇÃO DO RESTAURANTE
+  User user = User();                                          // PAGINA DE NAVEGAÇÃO DO RESTAURANTE
 class Menu extends StatefulWidget {
 
     Post data;
@@ -20,6 +22,9 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
+
+    user.verificandoUsuario(context);
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(245, 245, 245,1),
       body: Padding(
@@ -52,7 +57,10 @@ class _MenuState extends State<Menu> {
                         ],
                       ),
                     ),
-                    Container(
+                    Expanded(
+                      flex: 1,
+                      child:SingleChildScrollView(
+                        child: Container(
                       margin: EdgeInsets.only(top: 10,),
                       padding: EdgeInsets.only(top: 10,left: 5,right: 5,bottom: 5),
                       color: Colors.white,
@@ -223,10 +231,30 @@ class _MenuState extends State<Menu> {
 
                           ],
                         )
-                    )  
+                    )  ,
+                      ) ,
+                    )
           ],
         ),
       ),
+      bottomNavigationBar: Container(
+              height: 50,
+              child: BottomAppBar(
+                notchMargin: 4.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                    IconButton(
+                      onPressed:(){
+                        showModalBottomSheet<void>(context: context, builder: (BuildContext context) {
+                          return  CustomDrawer();
+                        });
+                      } ,
+                      icon: Icon(Icons.menu),)
+                    
+              ],),
+            ),
+            )
     );
   }
 }

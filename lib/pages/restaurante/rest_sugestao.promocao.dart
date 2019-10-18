@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:cardapio_show/pages/restaurante/sobre_restaurante.dart';
+import 'package:cardapio_show/pages/drawer/drawer.dart';
+import 'package:cardapio_show/pages/restaurante/rest_sobre_restaurante.dart';
 import 'package:http/http.dart' as http;
 import 'package:cardapio_show/helpers/post.dart';
 import 'package:cardapio_show/helpers/pratos.dart';
 import 'package:flutter/material.dart';
-import '../promo.dart';
 
 class Sugestao extends StatefulWidget {
   @override
@@ -156,7 +156,25 @@ class _SugestaoState extends State<Sugestao> {
                     )
                     
                ] )
-    )
+    ),
+    bottomNavigationBar: Container(
+              height: 50,
+              child: BottomAppBar(
+                notchMargin: 4.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                    IconButton(
+                      onPressed:(){
+                        showModalBottomSheet<void>(context: context, builder: (BuildContext context) {
+                          return  CustomDrawer();
+                        });
+                      } ,
+                      icon: Icon(Icons.menu),)
+                    
+              ],),
+            ),
+            )
     );
   }
 }
@@ -174,11 +192,11 @@ Future<List<Pratos>> _recuperarPratos(cod, opcao,context) async {
       Map dados = json.decode(response.body);
       listprato.clear();
       for(var p in dados['response']){ 
-        Pratos pratos = Pratos(preco:p['preco'],relacaoPrato: p['relacao_prato'],nomePrato: p['nome_prato'],descricaoPrato: p['descricao_prato'],imagemPrato: p['url'],id_produto: p['id_produto'],id_grupo: p['id_grupo'] );
+        Pratos pratos = Pratos(preco:p['preco'],relacaoPrato: p['relacao_prato'],nomePrato: p['nome_prato'],descricaoPrato: p['descricao_prato'],imagemPrato: p['url'],idProduto: p['id_produto'],idGrupo: p['id_grupo'] );
         listprato.add(pratos); 
     }
     }catch(e){
-       Navigator.push(context, MaterialPageRoute(builder: (context)=>Promo()));
+       Navigator.pushNamedAndRemoveUntil(context, "erro",(_) => false);
     }
     return listprato;
   }

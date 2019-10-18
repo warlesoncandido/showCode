@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:cardapio_show/avisos/confirm.dart' as prefix0;
-import 'package:toast/toast.dart';
 import 'package:cardapio_show/avisos/confirm.dart';
 import 'package:cardapio_show/helpers/cupom.dart';
 import 'package:cardapio_show/helpers/promocao.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+
+import 'drawer/drawer.dart';
 
 class cardpromo extends StatefulWidget {
   Promocao promo;
@@ -81,7 +81,7 @@ class _cardpromoState extends State<cardpromo> {
                                 padding: EdgeInsets.all(10),
                                 
                                 constraints: BoxConstraints(minWidth: 400,maxWidth: 500),
-                                height:150 ,
+                                
                                 color:Colors.white,
                                 child: Column(
                                   crossAxisAlignment:CrossAxisAlignment.start,
@@ -95,11 +95,10 @@ class _cardpromoState extends State<cardpromo> {
                                     style: TextStyle(fontSize:19 )),
                                     ),
 
-                                    Text("Valido para Compras de : R\$ 40,00 a R\$ 200,00",
-                                    style: TextStyle(fontSize:16 )),
+                                    
                                     Padding(
                                       padding: EdgeInsets.only(bottom:10,top: 10),
-                                      child: Text("Valido para uso de : ${alterandoBranco(widget.promo.dtusoini, "")} a ${alterandoBranco(widget.promo.dtusoini, "")}",
+                                      child: Text("Valido para uso de : ${alterandoBranco(widget.promo.dtusoini, "")} a ${alterandoBranco(widget.promo.dtusofim, "")}",
                                     style: TextStyle(fontSize:16 )),
                                     )
                                   ],
@@ -109,8 +108,9 @@ class _cardpromoState extends State<cardpromo> {
                               Container(
                                 margin: EdgeInsets.only(bottom:10,top: 10),
                                 padding: EdgeInsets.all(10),
-                                constraints: BoxConstraints(minWidth: 400,maxWidth: 500),
-                                height:150 ,
+                                constraints: BoxConstraints(minWidth: 400,maxWidth: 500,
+                                ),
+                                
                                 color:Colors.white,
                                 child: Column(
                                   children: <Widget>[
@@ -122,7 +122,7 @@ class _cardpromoState extends State<cardpromo> {
                                       child:Text(alterandoBranco(widget.promo.regra, ""),
                                     style:TextStyle(fontSize: 16),
                                     overflow: TextOverflow.ellipsis,
-                                    maxLines:5 )
+                                     )
                                     )
                                   ],
                                 ),
@@ -170,8 +170,7 @@ class _cardpromoState extends State<cardpromo> {
                                             cupom.cupom = cupomController.text;
                                             cupom.idCliente = "22";
                                             cupom.idPromocao = widget.promo.idpromocao;
-                                            cupom.postarCupom();
-                                            Toast.show("Esse cupom agora e seu!!",context,duration:Toast.LENGTH_LONG,gravity: Toast.BOTTOM,textColor: Colors.white);
+                                            cupom.postarCupom(context);
                                         },
                                       ),
                                       FlatButton(
@@ -199,6 +198,24 @@ class _cardpromoState extends State<cardpromo> {
                     )
                   ],
                 )
+            ),
+            bottomNavigationBar: Container(
+              height: 50,
+              child: BottomAppBar(
+                notchMargin: 4.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                    IconButton(
+                      onPressed:(){
+                        showModalBottomSheet<void>(context: context, builder: (BuildContext context) {
+                          return  CustomDrawer();
+                        });
+                      } ,
+                      icon: Icon(Icons.menu),)
+                    
+              ],),
+            ),
             )
     );
   }
