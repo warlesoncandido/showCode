@@ -21,12 +21,18 @@ class Fechar extends StatefulWidget {
 
 class _FecharState extends State<Fechar> {
 
+  recuperarValor(valor){
+    valor += valor;
+    setState(() {
+     total = valor; 
+    });
+  }
+
+
   @override
   Widget build(BuildContext context){
     
-    setState(() {
-      
-    });
+
      
     return  Scaffold(
       backgroundColor: Color.fromRGBO(245, 245, 245,1), 
@@ -94,17 +100,13 @@ class _FecharState extends State<Fechar> {
                                             ),
                                           );
                                         }else{
+                                          
                                           return ListView.builder(
                                             shrinkWrap: true,
                                             itemCount: snapshot.data.length,
                                             itemBuilder: (context,index){
-                                              
-                                            
-                                             total += double.parse( snapshot.data[index].total.replaceAll(",", ".")); 
-                                             
-                                            
-                                             
-                                              
+                                              total += double.parse( snapshot.data[index].total.replaceAll(",", ".")); 
+   
                                               return  Container(
                                                 margin: EdgeInsets.only(top: 15),
                                                 child: Column(
@@ -210,7 +212,6 @@ Future<List<Pedidos>> _recuperandoPedidos(cod,context) async {
         http.Response response = await http.get("http://erp.addmob.com.br/mesas_em_uso?codregistro=$cod&id_mesa=${prefs.getString("mesa")}&cardapio_show=");
                             var dados = json.decode(response.body);
                             pedidos.clear();
-                            total = 0;
                             for(var pedido in dados){
                               Pedidos p = Pedidos(
                                 pedido: pedido[3],

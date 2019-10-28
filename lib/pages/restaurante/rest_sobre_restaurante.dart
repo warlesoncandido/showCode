@@ -99,7 +99,7 @@ class _SobreState extends State<Sobre_Restaurante> {
                                                               child: Row(
                                                                 children: <Widget>[
                                                                   IconButton(
-                                                                    icon: Icon(Icons.remove,color: Colors.red,),
+                                                                    icon: Icon(Icons.remove,color: Colors.black,),
                                                                     onPressed:(){
                                                                       setState(() {
                                                                         if(unidade == 1){
@@ -131,7 +131,7 @@ class _SobreState extends State<Sobre_Restaurante> {
                                                               child: Container(
                                                                 
                                                                 child: RaisedButton(
-                                                           color: Colors.red,
+                                                           color: Colors.green,
                                                            textColor: Colors.white,
                                                            child: Text("Adicionar"),
                                                            onPressed: ()async{

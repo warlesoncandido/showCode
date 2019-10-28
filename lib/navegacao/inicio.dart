@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cardapio_show/helpers/circuito.dart';
 import 'package:cardapio_show/helpers/promocao.dart';
 import 'package:cardapio_show/helpers/user.dart';
 import 'package:cardapio_show/navegacao/cardapio.dart';
@@ -64,9 +65,9 @@ class Promo extends StatelessWidget {
                             child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text("Hoje quero",
+                              Text("Tipos de Culinária",
                                 style: TextStyle(
-                                  fontSize: 19,
+                                  fontSize: 17,
                                   color: Colors.black,
                                   fontWeight: FontWeight.w400
                                 )),
@@ -90,12 +91,16 @@ class Promo extends StatelessWidget {
                                                     backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/mineira.jpg"),
                                                   ),
                                                 ),
-                                                Text("Mineira",style: 
-                                                TextStyle(fontSize: 13 ),)
+                                                FittedBox(
+                                                  fit: BoxFit.scaleDown,
+                                                  child: Text("Mineira",style: 
+                                                TextStyle(fontSize: 13 ),
+                                                maxLines: 1,),
+                                                )
                                               ],
                                             ),
                                             onTap: (){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("1")));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio(idgosto :"1")));
                                             },
                                             )
                                           ),
@@ -111,12 +116,15 @@ class Promo extends StatelessWidget {
                                                     backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/contemporanea.jpg"),
                                                   ),
                                                 ),
-                                                Text("Contemporânea",style: 
-                                                TextStyle(fontSize: 13 ),)
+                                                FittedBox(
+                                                  child: Text("Contemporânea",style: 
+                                                TextStyle(fontSize: 13 ),
+                                                maxLines: 1,),
+                                                )
                                               ],
                                             ),
                                             onTap: (){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("3")));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio(idgosto :"3")));
                                             },
                                             )
                                           ),
@@ -133,13 +141,16 @@ class Promo extends StatelessWidget {
                                                     backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/peixes.jpg"),
                                                   ),
                                                 ),
-                                                Text("Peixes",style: 
+                                                FittedBox(
+                                                  child: Text("Peixes",style: 
                                                 TextStyle(fontSize: 13 ),
+                                                maxLines: 1,
+                                                ),
                                                 )
                                               ],
                                             ),
                                             onTap: (){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("4")));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio(idgosto :"4")));
                                             },
                                             )
                                           ),
@@ -155,12 +166,16 @@ class Promo extends StatelessWidget {
                                                     backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/petisco.jpeg"),
                                                   ),
                                                 ),
-                                                Text("Bar / Petisco",style: 
-                                                TextStyle(fontSize: 13 ),)
+                                                FittedBox(
+                                                  child: Text("Bar / Petisco",style: 
+                                                TextStyle(fontSize: 13 ),
+                                                maxLines: 1,
+                                                ),
+                                                )
                                               ],
                                             ),
                                             onTap: (){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("5")));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio(idgosto :"5")));
                                             },
                                             )
                                           ), 
@@ -183,12 +198,16 @@ class Promo extends StatelessWidget {
                                                     backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/italiana.jpg"),
                                                   ),
                                                 ),
-                                                Text("Italiana / Pizza",style: 
-                                                TextStyle(fontSize: 13 ),)
+                                                FittedBox(
+                                                  child: Text("Pizza",style: 
+                                                TextStyle(fontSize: 13 ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,),
+                                                )
                                               ],
                                             ),
                                             onTap: (){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("6")));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio(idgosto :"6")));
                                             },
                                             )
                                           ),
@@ -204,12 +223,15 @@ class Promo extends StatelessWidget {
                                                     backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/hamburguer.jpg"),
                                                   ),
                                                 ),
-                                                Text("Hamburgueria",style: 
-                                                TextStyle(fontSize: 13 ),)
+                                                FittedBox(
+                                                  child: Text("Hamburgueria",style: 
+                                                TextStyle(fontSize: 13 ),
+                                                maxLines: 1,),
+                                                )
                                               ],
                                             ),
                                             onTap: (){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("7")));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio(idgosto :"7")));
                                             },
                                             )
                                           ),
@@ -225,12 +247,15 @@ class Promo extends StatelessWidget {
                                                     backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/brasileira.jpg"),
                                                   ),
                                                 ),
-                                                Text("Brasileira",style: 
-                                                TextStyle(fontSize: 13 ),)
+                                                FittedBox(
+                                                  child: Text("Brasileira",style: 
+                                                TextStyle(fontSize: 13 ),
+                                                maxLines: 1,),
+                                                )
                                               ],
                                             ),
                                             onTap: (){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("8")));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio(idgosto :"8")));
                                             },
                                             )
                                           ),
@@ -246,11 +271,16 @@ class Promo extends StatelessWidget {
                                                     backgroundImage: NetworkImage("http://erp.addmob.com.br/static/imagens_empresas/menu/japonesa.jpg"),
                                                   ),
                                                 ),
-                                                Text("Japonesa")
+                                                FittedBox(
+                                                  child: Text("Japonesa",style: 
+                                                TextStyle(fontSize: 13 ),
+                                                maxLines: 1,
+                                                ),
+                                                )
                                               ],
                                             ),
                                             onTap: (){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio("2")));
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio(idgosto : "2")));
                                             },
                                             )
                                           ), 
@@ -261,9 +291,9 @@ class Promo extends StatelessWidget {
                                   ),
                                 ),
                                 // Divider **Promoções**//
-                                Text("Promoção",
+                                Text("Cupons de Desconto",
                                 style: TextStyle(
-                                  fontSize: 19,
+                                  fontSize: 17,
                                   color: Colors.black,
                                   fontWeight: FontWeight.w400
                                 )),
@@ -360,80 +390,80 @@ class Promo extends StatelessWidget {
                             }
                         ),
                                 ),
-                        //         Text("Roteiros de BH - Cidade da Gastronomia",
-                        //         style: TextStyle(
-                        //           fontSize: 19,
-                        //           color: Colors.black,
-                        //           fontWeight: FontWeight.bold
-                        //         )),
-                        //         Container(
-                        //            margin: EdgeInsets.only(top: 10),
-                        //           height: 200,
-                        //           child: FutureBuilder<List<Promocao>>(
-                        //      future: _recuperandoPromo(context,"s"),
-                        //     builder: (context,snapshot){
-                        //       switch(snapshot.connectionState){
-                        //         case ConnectionState.none:
-                        //         case ConnectionState.waiting:
-                        //           return Center(
-                        //             child: CircularProgressIndicator(),
-                        //           );
-                        //         default:
-                        //                 if(!snapshot.hasData){
-                        //                   Center(
-                        //                     child: Column(
-                        //                       children: <Widget>[
-                        //                         CircularProgressIndicator(),
-                        //                         Text("Aguarde")
-                        //                       ],
-                        //                     ),
-                        //                   );
-                        //                 }else{
-                        //                   return ListView.builder(
-                        //                     scrollDirection: Axis.horizontal,
-                        //               itemCount: snapshot.data.length,
-                        //               itemBuilder: (context,index){
-                        //                 return GestureDetector(
-                        //                   onTap: (){
-                                            
-                        //                   },
-                        //                   child:Container( 
-                        //                     margin: EdgeInsets.all(2),
-                        //                     width: 175,
-                        //                     height: 50,
-                        //                     decoration: BoxDecoration(
-                        //                       // border: Border.all(width: 0.2,color: Colors.grey),
-                        //                       borderRadius:BorderRadius.circular(5),
-                        //                     ),
-                        //                     child: Column(
-                        //                       crossAxisAlignment: CrossAxisAlignment.start,
-                        //                       children: <Widget>[
-                        //                         Container(
-                        //                           margin: EdgeInsets.only(bottom: 3),
-                        //                           height:100 ,
-                        //                           decoration: BoxDecoration(
-                        //                             borderRadius:BorderRadius.circular(5),
-                        //                             image: DecorationImage(
-                        //                               fit: BoxFit.cover,
-                        //                               image:NetworkImage(snapshot.data[index].imagem) )
-                        //                           )
-                        //                           ,
-                        //                         ),
-                        //                         Text(snapshot.data[index].nomepromocao,style: 
-                        //                         TextStyle(fontSize: 12,
-                        //                         fontWeight: FontWeight.bold,
-                        //                         color: Color.fromRGBO(252, 76, 2, 1)),),
+                                Text("Roteiros de BH - Cidade da Gastronomia",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400
+                                )),
+                                Container(
+                                   margin: EdgeInsets.only(top: 20),
+                                  height: 200,
+                                  child: FutureBuilder<List<Circuito>>(
+                             future: _recuperandoCircuito(context),
+                            builder: (context,snapshot){
+                              switch(snapshot.connectionState){
+                                case ConnectionState.none:
+                                case ConnectionState.waiting:
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                default:
+                                        if(!snapshot.hasData){
+                                          Center(
+                                            child: Column(
+                                              children: <Widget>[
+                                                CircularProgressIndicator(),
+                                                Text("Aguarde")
+                                              ],
+                                            ),
+                                          );
+                                        }else{
+                                          return ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                      itemCount: snapshot.data.length,
+                                      itemBuilder: (context,index){
+                                        return GestureDetector(
+                                          onTap: (){
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Cardapio(idcircuito: snapshot.data[index].id,)));
+                                          },
+                                          child:Container( 
+                                            margin: EdgeInsets.all(2),
+                                            width: 175,
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              // border: Border.all(width: 0.2,color: Colors.grey),
+                                              borderRadius:BorderRadius.circular(5),
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.only(bottom: 3),
+                                                  height:100 ,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:BorderRadius.circular(5),
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image:NetworkImage(snapshot.data[index].imagem) )
+                                                  )
+                                                  ,
+                                                ),
+                                                Text(snapshot.data[index].nome,style: 
+                                                TextStyle(fontSize: 12,
+                                                fontWeight: FontWeight.w400,
+                                                color: Color.fromRGBO(252, 76, 2, 1)),),
                                                  
-                        //                       ],
-                        //                     )
-                        //                   ) ,
-                        //                 );
-                        //               });
-                        //             }
-                        //       }
-                        //     }
-                        // ),
-                        //         )
+                                              ],
+                                            )
+                                          ) ,
+                                        );
+                                      });
+                                       }
+                                      }
+                                    }
+                                  ),
+                                )
                             ],
                           ),
                           )
@@ -466,6 +496,8 @@ class Promo extends StatelessWidget {
     );
   }
 }
+
+// REQUISIÇÃO DAS PROMOÇÕES
 List<Promocao> promocoes = List();
 Future<List<Promocao>> _recuperandoPromo(context,roteiro) async {
     try{
@@ -499,3 +531,27 @@ Future<List<Promocao>> _recuperandoPromo(context,roteiro) async {
     return promocoes;
   }
 
+// REQUISIÇÃO DE CIRCUITOS
+
+List<Circuito> circuitos = List();
+Future<List<Circuito>> _recuperandoCircuito(context) async {
+    try{
+        http.Response response = await http.get("http://erp.addmob.com.br/recuperar_circuito");  // REQUISIÇÃO GET 
+        Map dados = json.decode(response.body); // RETORNANDO DADOS EM FORMATO JSON
+        circuitos.clear();                             // LIMPANDO A LISTA
+        for(var c in dados['response']){             // PARA CADA JSON ADD EM UMA LISTA
+          // GUARDANDO OS DADOS NA CLASSE PROMO
+          Circuito circ = Circuito(
+            id: c['id'],
+            nome: c['nome'],
+            imagem : c['imagem']
+          );
+          
+          circuitos.add(circ);      
+    }
+    
+    }catch(e){
+       Navigator.pushNamedAndRemoveUntil(context, "erro",(_) => false);
+    }
+    return circuitos;
+  }

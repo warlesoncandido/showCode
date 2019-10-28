@@ -142,7 +142,7 @@ class _cardpromoState extends State<cardpromo> {
                                       
                                       child: AlertDialog(
                                         elevation: 3,
-                                    title: Text("Clique em Comprar!",style: TextStyle(color: Colors.red,fontSize: 18),),
+                                    title: Text("Clique em Reservar!",style: TextStyle(color: Colors.red,fontSize: 18),),
                                     content: 
                                               Container(
                                                 
@@ -164,7 +164,7 @@ class _cardpromoState extends State<cardpromo> {
                                               
                                     actions: [
                                       FlatButton(
-                                        child: Text("Comprar Cupom",style: TextStyle(fontSize: 16,color: Colors.green),),
+                                        child: Text("Reservar",style: TextStyle(fontSize: 16,color: Colors.green),),
                                         onPressed: (){
                                             cupom.codregistro=widget.promo.codregistro;
                                             cupom.cupom = cupomController.text;

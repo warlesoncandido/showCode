@@ -5,6 +5,7 @@ import 'package:cardapio_show/helpers/user.dart';
 import 'package:cardapio_show/pages/drawer/drawer.dart';
 import 'package:cardapio_show/pages/restaurante/menu_restaurante.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
@@ -14,19 +15,18 @@ User user = User();
 class Cardapio extends StatefulWidget {
 
   String idgosto;
-  Cardapio(this.idgosto);
+  String idcircuito;
+  
+  Cardapio({this.idgosto,this.idcircuito});
   @override
   _CardapioState createState() => _CardapioState();
 }
+var distancia;
 class _CardapioState extends State<Cardapio> {
-
-  // REQUISIÇÃO HTTP PARA RECUPERAR OS RETAURANTES
-  
-
-// INCIO DE LAYOUT
 
   @override
   Widget build(BuildContext context) {
+    
     user.verificandoUsuario(context);
     return Scaffold(
       backgroundColor: Color.fromRGBO(245, 245, 245,1),
@@ -63,7 +63,7 @@ class _CardapioState extends State<Cardapio> {
                     Expanded(
                         flex: 1,
                         child: FutureBuilder<List<Post>>(
-                             future: _recuperandoRestaurante(context,widget.idgosto),
+                             future:_recuperandoRestaurante(context,widget.idgosto,widget.idcircuito),
                             builder: (context,snapshot){
                               switch(snapshot.connectionState){
                                 case ConnectionState.none:
@@ -88,7 +88,7 @@ class _CardapioState extends State<Cardapio> {
                                       itemBuilder: (context,index){
                                         return GestureDetector(
                                           onTap: (){
-                                            //  Navigator.push(context, MaterialPageRoute(builder: (context)=>Menu(snapshot.data[index])));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Menu(snapshot.data[index])));
                                           },
                                           child: Card(
                                             elevation: 5,
@@ -115,7 +115,8 @@ class _CardapioState extends State<Cardapio> {
                                                     Text("${snapshot.data[index].telefone}"),
                                                     Text(snapshot.data[index].site == null ?" " :snapshot.data[index].site),
                                                     Text("${snapshot.data[index].endereco} "+"${snapshot.data[index].numeroendereco}"),
-                                                    Text("${snapshot.data[index].bairro}  / "+"${snapshot.data[index].cidade}")
+                                                    Text("${snapshot.data[index].bairro}  / "+"${snapshot.data[index].cidade}"),
+                                                    //Text(distancia == null ? "0.0 Km" : distancia.toString()+ " km"),
                                                   ],
                                                 )
                                               ],
@@ -154,10 +155,19 @@ class _CardapioState extends State<Cardapio> {
     );
   }
 }
+
+
+
 List<Post> postagens = List();
-Future<List<Post>> _recuperandoRestaurante(context,idgosto) async {
+Future<List<Post>> _recuperandoRestaurante(context,idgosto,idcircuito) async {
     try{
-        http.Response response = await http.get("http://erp.addmob.com.br/listar_gosto?id_gosto=$idgosto");  // REQUISIÇÃO GET 
+      http.Response response;
+      if(idgosto != null){
+        response =await http.get("http://erp.addmob.com.br/listar_gosto?id_gosto=$idgosto");
+      }else{
+        response =await http.get("http://erp.addmob.com.br/lista_restaurante?id=$idcircuito");
+      }
+           // REQUISIÇÃO GET 
         Map dados = json.decode(response.body);         // RETORNANDO DADOS EM FORMATO JSON
         postagens.clear();                              // LIMPANDO A LISTA
         var lista = dados['response'];
@@ -191,8 +201,13 @@ Future<List<Post>> _recuperandoRestaurante(context,idgosto) async {
           Navigator.pushNamedAndRemoveUntil(context, "erro",(_) => false);
         }
      }
+     print(idgosto);
     return postagens;
+    
   }
+
+
+
   
 
 
