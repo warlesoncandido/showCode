@@ -1,10 +1,7 @@
 import 'package:cardapio_show/helpers/user.dart';
-import 'package:cardapio_show/navegacao/cadastro.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-
-
+import 'cadastro.dart';
 
 
 var maskFormatter = new MaskTextInputFormatter(mask: '(##)#####-####', filter: { "#": RegExp(r'[0-9]') });
@@ -12,32 +9,27 @@ TextEditingController loginController = TextEditingController();
 TextEditingController senhaController = TextEditingController();
 User user = User();
 class Loginv extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown
-  ]);
-
-  
-    return Scaffold(
-      body: Container(
-        
-        decoration: BoxDecoration(
-          color:Color.fromRGBO(245, 245, 245,1),
-          image: DecorationImage(
-            fit: BoxFit.fill,
-            image:AssetImage("images/bg.png") )
-        ),
-        child:Container(
-          color: Color.fromRGBO(249, 249, 249, 0.7),
-          padding: EdgeInsets.all(10),
-          child:  Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+    Size size = MediaQuery.of(context).size;
+    return  Scaffold(
+      body: Stack(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              image:DecorationImage(
+                fit: BoxFit.fill,
+                image:AssetImage("images/bg.png") ) ),
+            child: Container(
+              color: Color.fromRGBO(249, 249, 249, 0.7),
+            ),        
+            ),
+          Center(
+        child: SingleChildScrollView(
+          child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-              Container(
+           children: <Widget>[
+                 Container(
                 child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[      
@@ -56,12 +48,6 @@ class Loginv extends StatelessWidget {
                         ],
                       ),
               ),
-              
-            Form(
-              
-              child: Column(
-                children: <Widget>[
-                  // Input Usuario
             Container(
               height: 50,
               decoration: BoxDecoration(
@@ -91,6 +77,7 @@ class Loginv extends StatelessWidget {
                         borderRadius: BorderRadius.only(topRight:Radius.circular(10),bottomRight:Radius.circular(10))
                       ),
                       child: TextFormField(
+                        autofocus:true,
                         textAlign: TextAlign.left,
                         inputFormatters: [maskFormatter],
                         keyboardType: TextInputType.number,
@@ -140,7 +127,7 @@ class Loginv extends StatelessWidget {
                         borderRadius: BorderRadius.only(topRight:Radius.circular(10),bottomRight:Radius.circular(10))
                       ),
                       child: TextFormField(
-                        autofocus:true,
+                        
                         textAlign: TextAlign.left,
                         controller: senhaController,
                         obscureText: true,
@@ -154,9 +141,7 @@ class Loginv extends StatelessWidget {
                 ],
               ),
             ),
-                ],
-              ),
-            ),
+              
             Padding(padding: EdgeInsets.all(15),),
             Container(
               constraints: BoxConstraints(
@@ -196,16 +181,18 @@ class Loginv extends StatelessWidget {
               child: Text("Cadastrar",
               style:TextStyle(color: Colors.white) ,),
             ),
-            )
-            ,FlatButton(
+            ),
+            FlatButton(
               child: Text("Ops!!Esqueci minha senha :(",style:TextStyle(color: Colors.red)),
               onPressed: (){
                 Navigator.pushNamed(context, "recuperar");
               },
             )
-          ],
+          ]
         ),
         )
+      )
+        ],
       ),
     );
   }
